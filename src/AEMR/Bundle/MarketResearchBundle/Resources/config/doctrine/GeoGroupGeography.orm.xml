@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoGroupGeography" table="base_geogroupgraphies">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+        <field name="geogroup_id" type="bigint" column="geogroup_id" />
+	<field name="geography_id" type="bigint" column="geography_id" />
+	<indexes>
+	    <index name="geogroup_geography_id" columns="geogroup_id,geography_id" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

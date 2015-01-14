@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\User" table="base_users">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+	<field name="name" type="string" column="name" length="255" />
+        <field name="email" type="string" column="email" length="50" />
+        <field name="password" type="string" column="password" length="255" />
+	<field name="status" type="string" column="status" length="20" />
+	<indexes>
+	    <index name="email_password" columns="email,password" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

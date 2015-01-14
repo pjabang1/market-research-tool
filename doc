@@ -1,0 +1,14 @@
+php app/console doctrine:generate:entities AEMRMarketResearchBundle
+php app/console doctrine:schema:update --force
+php app/load load:csv app/data/geographies.csv "AEMRMarketResearchBundle:Geography" code
+php app/load load:csv app/data/WDI_Indicators.csv "AEMRMarketResearchBundle:GeoIndicator" code
+php app/load load:wdidata /home/essa/data/essa/WDI_Data.csv
+php app/load load:geogroup app/data/europe
+
+SELECT g.code, g.name, gi.id, gi.name, gis.value, gis.date
+FROM  `base_geographies` g
+LEFT JOIN base_geoindicatorseries gis ON g.id = gis.geography_id
+LEFT JOIN base_geoindicator gi ON gi.id = gis.geoindicator_id
+WHERE g.id =62
+AND gi.id =535
+

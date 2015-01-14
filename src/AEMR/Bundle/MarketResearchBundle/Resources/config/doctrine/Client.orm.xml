@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\Client" table="base_clients">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+        <field name="code" type="string" column="code" length="10" />
+	<field name="name" type="string" column="name" length="255" />
+	<field name="logo" type="string" column="logo" length="50" />
+	<field name="description" type="string" column="description" length="255" />
+	<indexes>
+	    <index name="code" columns="code" />
+	    <index name="name" columns="name" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

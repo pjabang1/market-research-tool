@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\Geography" table="base_geographies">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+        <field name="code" type="string" column="code" length="10" />
+        <field name="code_3" type="string" column="code_3" length="10" />
+        <field name="numerical_code" type="string" column="numerical_code" length="10" />
+	<field name="name" type="string" column="name" length="255" />
+	<field name="type" type="string" column="type" length="20" />
+	<indexes>
+	    <index name="code" columns="code" />
+            <index name="code_3" columns="code_3" />
+            <index name="name" columns="name" />
+            <index name="numerical_code" columns="numerical_code" />
+	    <index name="type" columns="type" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

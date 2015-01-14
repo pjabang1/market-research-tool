@@ -1,0 +1,3 @@
+aemr_market_research_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AEMRMarketResearchBundle:Default:index }

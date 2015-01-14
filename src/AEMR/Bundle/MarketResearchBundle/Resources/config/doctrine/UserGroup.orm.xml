@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\UserGroup" table="user_groups">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+        <field name="group_id" type="bigint" column="group_id" />
+	<field name="user_id" type="bigint" column="user_id" />
+	<indexes>
+	    <index name="group_id" columns="group_id" />
+	    <index name="user_id" columns="user_id" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>
