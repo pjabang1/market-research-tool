@@ -1,14 +1,44 @@
 php app/console doctrine:generate:entities AEMRMarketResearchBundle
 php app/console doctrine:schema:update --force
+
 php app/load load:csv app/data/geographies.csv "AEMRMarketResearchBundle:Geography" code
 php app/load load:csv app/data/WDI_Indicators.csv "AEMRMarketResearchBundle:GeoIndicator" code
-php app/load load:wdidata /home/essa/data/essa/WDI_Data.csv
+php app/load load:wdidata /home/essa/data/essa/WDI_Data.csv "wdi.import"
 php app/load load:geogroup app/data/europe
 
 SELECT g.code, g.name, gi.id, gi.name, gis.value, gis.date
 FROM  `base_geographies` g
 LEFT JOIN base_geoindicatorseries gis ON g.id = gis.geography_id
 LEFT JOIN base_geoindicator gi ON gi.id = gis.geoindicator_id
-WHERE g.id =62
-AND gi.id =535
+WHERE g.id =62 AND gi.id =535
+
+
+php app/console generate:doctrine:crud --entity=AEMRMarketResearchBundle:GeoModel
+
+
+co-occurence matrix
+
+http://bost.ocks.org/mike/miserables/
+http://benjiec.github.io/scatter-matrix/demo/demo.html
+http://www.doingbusiness.org/rankings
+
+Website look
+http://www.novus.com/
+http://www.chartblocks.com/en/
+
+
+SELECT gm.name, gm.`algorithm_code` ,g.code AS code, g.id AS gid, g.name AS Geography, gi.name AS Indicator, gmpi.weight, gmp.name AS parameter, gis.value AS value, gis.date
+FROM  `base_geomodels` gm
+LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gm.`geogroup_id` 
+LEFT JOIN base_geographies g ON g.id = ggg.geography_id
+LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
+LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id
+LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id
+LEFT JOIN base_geoindicatorseries gis ON gis.geoindicator_id = gi.id
+AND gis.geography_id = g.id
+WHERE gm.id =1 AND gis.date = 2013 AND gmp.name = 'x'
+ORDER BY  `g`.`name` ASC 
+
+
+
 

@@ -1,0 +1,139 @@
+<?php
+
+namespace AEMR\Bundle\MarketResearchBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * GeoModel
+ */
+class GeoModel
+{
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $algorithm_code;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return GeoModel
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set algorithm_code
+     *
+     * @param string $algorithmCode
+     * @return GeoModel
+     */
+    public function setAlgorithmCode($algorithmCode)
+    {
+        $this->algorithm_code = $algorithmCode;
+
+        return $this;
+    }
+
+    /**
+     * Get algorithm_code
+     *
+     * @return string 
+     */
+    public function getAlgorithmCode()
+    {
+        return $this->algorithm_code;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return GeoModel
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @var integer
+     */
+    private $geogroup_id;
+
+
+    /**
+     * Set geogroup_id
+     *
+     * @param integer $geogroupId
+     * @return GeoModel
+     */
+    public function setGeogroupId($geogroupId)
+    {
+        $this->geogroup_id = $geogroupId;
+
+        return $this;
+    }
+
+    /**
+     * Get geogroup_id
+     *
+     * @return integer 
+     */
+    public function getGeogroupId()
+    {
+        return $this->geogroup_id;
+    }
+}

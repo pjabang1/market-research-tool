@@ -1,0 +1,12 @@
+code,name,source,periodicity
+WBG:EODBR,Ease of Doing Business Rank,Doing Business,Static
+WBG:SAB,Starting a Business,Doing Business,Static
+WBG:DWCP,Dealing with Construction Permits,Doing Business,Static
+WBG:GE,Getting Electricity,Doing Business,Static
+WBG:RP,Registering Property,Doing Business,Static
+WBG:GC,Getting Credit,Doing Business,Static
+WBG:PMI,Protecting Minority Investors,Doing Business,Static
+WBG:PT,Paying Taxes,Doing Business,Static
+WBG:TAB,Trading Across Borders,Doing Business,Static
+WBG:EC,Enforcing Contracts,Doing Business,Static
+WBG:TI,Resolving Insolvency,Doing Business,Static

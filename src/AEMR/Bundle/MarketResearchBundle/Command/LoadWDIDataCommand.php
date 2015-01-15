@@ -23,6 +23,9 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
                 ->addArgument(
                         'file', InputArgument::REQUIRED, 'File'
                 )
+                ->addArgument(
+                        'parameter', InputArgument::REQUIRED, 'eg wdi.import'
+                )
                 ->setDescription('Load WDI data')
         ;
     }
@@ -70,8 +73,8 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
         throw new \Exception('Indicator not found : ' . $code);
     }
 
-    protected function getConfig() {
-        return $this->getContainer()->getParameter('wdi.import');
+    protected function getConfig($parameter) {
+        return $this->getContainer()->getParameter($parameter);
     }
 
     protected function getData($header, $data) {
@@ -106,11 +109,14 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
 
         $this->setInsertLimit(10);
         $filePath = $input->getArgument('file');
+        $parameter = $input->getArgument('parameter');
 
         $em = $this->getEntityManager();
-        $config = $this->getConfig();
+        $config = $this->getConfig($parameter);
 
-        $table = $em->getClassMetadata('AEMRMarketResearchBundle:GeoIndicatorSeries')->getTableName();
+        $geoGroupSeriesEntity = 'AEMRMarketResearchBundle:GeoIndicatorSeries';
+        $table = $em->getClassMetadata($geoGroupSeriesEntity)->getTableName();
+
 
 
         $file = new \SplFileObject($filePath);
@@ -124,34 +130,50 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
                 $row = array();
 
                 if (isset($data[$config['country_code_column']]) && isset($data[$config['indicator_code_column']])) {
-                    
-                    if(!in_array($data[$config['indicator_code_column']], $config['indicators'])) {
+
+                    if (isset($config['indicators']) && !in_array($data[$config['indicator_code_column']], $config['indicators'])) {
                         continue;
                     }
-                    
-                    $row['geoindicator_id'] = $this->getIndicatorIdByCode($data[$config['indicator_code_column']]);
-                    $row['geography_id'] = $this->getGeographyIdByCode3($data[$config['country_code_column']]);
+
+                    $row['geoindicator_id'] = (int) $this->getIndicatorIdByCode($data[$config['indicator_code_column']]);
+                    $row['geography_id'] = (int) $this->getGeographyIdByCode3($data[$config['country_code_column']]);
+
+                    $data = array_merge($data, $row);
 
                     $series = $this->createSeries($row, $data, $config['periods']);
-
+                    // print_r($series);
                     if ($series) {
-                        foreach ($series AS $data) {
+                        foreach ($series AS $insertRow) {
                             $rows++;
-                            $this->update($table, $data);
+                            $conditions = array(
+                                'geoindicator_id' => $insertRow['geoindicator_id'], 'geography_id' => $insertRow['geography_id'], 'date' => $insertRow['date']
+                            );
+                            $geoGroupSeries = $em->getRepository($geoGroupSeriesEntity)->findOneBy($conditions);
+                            // print_r($insertRow);
+                            if($geoGroupSeries) {
+                                $this->replace($table, $insertRow, $conditions);
+                                // echo "updateing \n";
+                            } else {
+                                $this->replace($table, $insertRow);
+                            }
+                            // $output->writeln("<info>saving ... </info>");
+                            // $output->writeln($insertRow);
+                            // print_r($data);
+                            
+                            $this->replace($table, $insertRow);
                         }
                     }
                 }
 
                 $i++;
-                $output->writeln($i);
-
+                // $output->writeln($i);
                 // print_r($data);
             } catch (\Exception $e) {
                 $output->writeln("<error>" . $e->getMessage() . "</error>");
             }
         }
         if ($rows) {
-            $this->update($table, array(), true);
+            $this->replace($table, array(), array(), true);
         }
         $output->writeln($rows . "lines to write \n");
         // print_r($geographies);

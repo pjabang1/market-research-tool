@@ -8,11 +8,9 @@ abstract class ConnectionAwareCommand extends ContainerAwareCommand {
 
     private $connection;
     private $entityManager;
-    
     protected $insertCounter = 0;
-    
     protected $insertLimit = 5000;
-    
+
     public function getInsertCounter() {
         return $this->insertCounter;
     }
@@ -29,7 +27,6 @@ abstract class ConnectionAwareCommand extends ContainerAwareCommand {
         $this->insertLimit = $insertLimit;
     }
 
-    
     public function getEntityManager() {
         if (!$this->entityManager) {
             $this->entityManager = $this->getContainer()->get('doctrine')->getManager();
@@ -57,9 +54,9 @@ abstract class ConnectionAwareCommand extends ContainerAwareCommand {
 
     protected function update($table, $line, $comit = false) {
 
-     
+
         $conn = $this->getConnection();
-        $conn->getConfiguration()->setSQLLogger();
+
         if ($this->insertCounter == 0) {
             $conn->beginTransaction();
         }
@@ -69,17 +66,58 @@ abstract class ConnectionAwareCommand extends ContainerAwareCommand {
                 $conn->insert($table, $line);
                 $this->insertCounter++;
             } catch (\Exception $e) {
-                // echo $e->getMessage();
+                echo $e->getMessage() . "\n";
+                // print_r($line);
             }
         }
 
-        if (!$comit && $this->insertCounter > $this->insertLimit) {
+        if (!$comit && $this->insertCounter >= $this->insertLimit) {
+            echo "commiting \n";
             $conn->commit();
             $this->insertCounter = 0;
         }
 
         if ($comit && $this->insertCounter > 0) {
+            echo "final commit \n";
             $conn->commit();
+        }
+    }
+
+    protected function replace($table, $line, $conditions = array(), $comit = false) {
+
+
+        $conn = $this->getConnection();
+
+        if ($this->insertCounter == 0) {
+            // $conn->beginTransaction();
+        }
+
+        if ($line) {
+
+            try {
+                if ($conditions) {
+                    echo "updating \n";
+                    $conn->update($table, $line, $conditions);
+                } else {
+                    $conn->insert($table, $line);
+                    echo "inserting \n";
+                }
+                $this->insertCounter++;
+            } catch (\Exception $e) {
+                // echo $e->getMessage() . "\n";
+                // print_r($line);
+            }
+        }
+
+        if (!$comit && $this->insertCounter >= $this->insertLimit) {
+            echo "commiting \n";
+            // $conn->commit();
+            $this->insertCounter = 0;
+        }
+
+        if ($comit && $this->insertCounter > 0) {
+            echo "final commit \n";
+            // $conn->commit();
         }
     }
 

@@ -1,0 +1,30 @@
+geography:
+    path:     /
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:index" }
+
+geography_show:
+    path:     /{id}/show
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:show" }
+
+geography_new:
+    path:     /new
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:new" }
+
+geography_create:
+    path:     /create
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:create" }
+    requirements: { _method: post }
+
+geography_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:edit" }
+
+geography_update:
+    path:     /{id}/update
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:update" }
+    requirements: { _method: post|put }
+
+geography_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AEMRMarketResearchBundle:Geography:delete" }
+    requirements: { _method: post|delete }

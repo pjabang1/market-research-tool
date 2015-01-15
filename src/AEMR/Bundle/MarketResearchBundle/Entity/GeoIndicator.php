@@ -304,4 +304,32 @@ class GeoIndicator
     {
         return $this->aggregation_method;
     }
+    /**
+     * @var string
+     */
+    private $source;
+
+
+    /**
+     * Set source
+     *
+     * @param string $source
+     * @return GeoIndicator
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return string 
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
 }

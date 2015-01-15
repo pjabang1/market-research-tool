@@ -24,3 +24,9 @@ parameters:
       indicator_code_column: indicator_code
       indicators: [IC.BUS.DISC.XQ,IC.BUS.EASE.XQ,IC.BUS.NDNS.ZS,IC.BUS.NREG,IC.EXP.COST.CD,EG.ELC.ACCS.ZS,EG.USE.COMM.GD.PP.KD,EN.POP.DNST,EN.POP.DNST,SP.POP.GROW,SP.POP.TOTL]
       periods: [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014]
+    wbg.import:
+      countries: '*'
+      country_code_column: code_3
+      indicator_code_column: indicator_code
+      indicators: ['*']
+      periods: ['*']

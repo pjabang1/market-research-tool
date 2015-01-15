@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GeoIndicator list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Geo_type</th>
+                <th>Value_type</th>
+                <th>Periodicity</th>
+                <th>Base_period</th>
+                <th>Status</th>
+                <th>Source</th>
+                <th>Aggregation_method</th>
+                <th>Description</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('geoindicator_show', { 'id': entity.id }) }}">{{ entity.code }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.geotype }}</td>
+                <td>{{ entity.valuetype }}</td>
+                <td>{{ entity.periodicity }}</td>
+                <td>{{ entity.baseperiod }}</td>
+                <td>{{ entity.status }}</td>
+                <td>{{ entity.source }}</td>
+                <td>{{ entity.aggregationmethod }}</td>
+                <td>{{ entity.description }}</td>
+                <td>{{ entity.id }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('geoindicator_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('geoindicator_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('geoindicator_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

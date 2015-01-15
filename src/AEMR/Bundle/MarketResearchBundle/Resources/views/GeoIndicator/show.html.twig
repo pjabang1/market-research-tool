@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GeoIndicator</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Code</th>
+                <td>{{ entity.code }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Geo_type</th>
+                <td>{{ entity.geotype }}</td>
+            </tr>
+            <tr>
+                <th>Value_type</th>
+                <td>{{ entity.valuetype }}</td>
+            </tr>
+            <tr>
+                <th>Periodicity</th>
+                <td>{{ entity.periodicity }}</td>
+            </tr>
+            <tr>
+                <th>Base_period</th>
+                <td>{{ entity.baseperiod }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ entity.source }}</td>
+            </tr>
+            <tr>
+                <th>Aggregation_method</th>
+                <td>{{ entity.aggregationmethod }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ entity.description }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('geoindicator') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('geoindicator_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+geomodelparameter:
+    path:     /
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:index" }
+
+geomodelparameter_show:
+    path:     /{id}/show
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:show" }
+
+geomodelparameter_new:
+    path:     /new
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:new" }
+
+geomodelparameter_create:
+    path:     /create
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:create" }
+    requirements: { _method: post }
+
+geomodelparameter_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:edit" }
+
+geomodelparameter_update:
+    path:     /{id}/update
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:update" }
+    requirements: { _method: post|put }
+
+geomodelparameter_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModelParameter:delete" }
+    requirements: { _method: post|delete }

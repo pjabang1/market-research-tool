@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GeoModelParameter</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>Geomodel_id</th>
+                <td>{{ entity.geomodelid }}</td>
+            </tr>
+            <tr>
+                <th>Aggregation_type</th>
+                <td>{{ entity.aggregationtype }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('geomodelparameter') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('geomodelparameter_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

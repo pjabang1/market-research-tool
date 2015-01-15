@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping>
-    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicator" table="base_geoindicator">
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicator" table="base_geoindicators">
 	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
 	<id name="id" type="bigint" column="id">
 	    <generator strategy="IDENTITY"/>
@@ -12,6 +12,7 @@
         <field name="periodicity" type="string" column="periodicity" length="20" />
         <field name="base_period" type="string" column="base_period" length="50" />
         <field name="status" type="string" column="status" length="10" />
+        <field name="source" type="string" column="source" length="50" />
         <field name="aggregation_method" type="string" column="aggregation_method" length="20" />
 	<field name="description" type="string" column="description" length="255" />
 	<indexes>

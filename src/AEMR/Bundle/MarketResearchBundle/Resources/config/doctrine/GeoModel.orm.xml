@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoModel" table="base_geomodels">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+	<field name="name" type="string" column="name" length="255" />
+        <field name="algorithm_code" type="string" column="algorithm_code" length="20" />
+	<field name="description" type="string" column="description" length="255" />
+        <field name="geogroup_id" type="bigint" column="geogroup_id" />
+	<indexes>
+	    <index name="name" columns="name" />
+            <index name="geogroup_id" columns="geogroup_id" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>
