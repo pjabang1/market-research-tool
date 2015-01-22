@@ -37,6 +37,6 @@ class GeoModelParameterIndicatorType extends AbstractType
      */
     public function getName()
     {
-        return 'aemr_bundle_marketresearchbundle_geomodelparameterindicator';
+        return 'geomodelparameterindicator';
     }
 }

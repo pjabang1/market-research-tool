@@ -41,4 +41,13 @@ ORDER BY  `g`.`name` ASC
 
 
 
+Pie Chart 
 
+http://stackoverflow.com/questions/21769872/d3-js-pie-chart-with-angled-horizontal-labels
+http://jsfiddle.net/Qh9X5/1196/
+http://plottablejs.org/examples/tooltips/
+
+
+Nice map colors
+
+https://www.quintly.com/blog/2014/01/search-trends-social-media-analytics/

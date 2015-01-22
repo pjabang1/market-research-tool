@@ -37,6 +37,6 @@ class GeoModelType extends AbstractType
      */
     public function getName()
     {
-        return 'aemr_bundle_marketresearchbundle_geomodel';
+        return 'geomodel';
     }
 }

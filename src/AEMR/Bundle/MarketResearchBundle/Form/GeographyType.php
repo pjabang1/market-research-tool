@@ -38,6 +38,6 @@ class GeographyType extends AbstractType
      */
     public function getName()
     {
-        return 'aemr_bundle_marketresearchbundle_geography';
+        return 'geography';
     }
 }

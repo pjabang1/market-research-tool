@@ -43,6 +43,6 @@ class GeoIndicatorType extends AbstractType
      */
     public function getName()
     {
-        return 'aemr_bundle_marketresearchbundle_geoindicator';
+        return 'geoindicator';
     }
 }
