@@ -1,0 +1,47 @@
+api_aemr_market_research:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing.yml"
+    prefix:   /
+api_aemr_market_research_geomodel:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodel.yml"
+    type: rest
+    prefix:   /geomodel
+api_aemr_market_research_geomodelparameter:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodelparameter.yml"
+    type: rest
+    prefix:   /geomodelparameter
+api_aemr_market_research_geomodelparameterindicator:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodelparameterindicator.yml"
+    type: rest
+    prefix:   /geomodelparameterindicator
+api_aemr_market_research_geoindicator:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geoindicator.yml"
+    type: rest
+    prefix:   /geoindicator
+api_aemr_market_research_geogroup:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geogroup.yml"
+    type: rest
+    prefix:   /geogroup
+api_aemr_market_research_geography:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geography.yml"
+    type: rest
+    prefix:   /geography
+api_aemr_market_research_geogroupgeography:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geogroupgeography.yml"
+    type: rest
+    prefix:   /geogroupgeography
+api_aemr_market_research_geoindicatorseries:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geoindicatorseries.yml"
+    type: rest
+    prefix:   /geoindicatorseries
+api_aemr_market_research_client:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/client.yml"
+    type: rest
+    prefix:   /client
+api_aemr_market_research_user:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/user.yml"
+    type: rest
+    prefix:   /user
+api_aemr_market_research_usergroup:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/usergroup.yml"
+    type: rest
+    prefix:   /usergroup

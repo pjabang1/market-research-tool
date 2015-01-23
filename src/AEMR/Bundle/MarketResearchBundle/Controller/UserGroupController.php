@@ -2,42 +2,40 @@
 
 namespace AEMR\Bundle\MarketResearchBundle\Controller;
 
-use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use AEMR\Bundle\MarketResearchBundle\Entity\Geography;
-use AEMR\Bundle\MarketResearchBundle\Form\GeographyType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use AEMR\Bundle\MarketResearchBundle\Entity\UserGroup;
+use AEMR\Bundle\MarketResearchBundle\Form\UserGroupType;
 
 /**
- * Geography controller.
+ * UserGroup controller.
  *
- * @Rest\View()
  */
-class GeographyController extends AEMRRestController 
+class UserGroupController extends Controller
 {
 
     /**
-     * Lists all Geography entities.
+     * Lists all UserGroup entities.
      *
-     * 
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AEMRMarketResearchBundle:Geography')->findAll();
+        $entities = $em->getRepository('AEMRMarketResearchBundle:UserGroup')->findAll();
 
-        return array(
-            'countries' => $entities
-        );
-
+        return $this->render('AEMRMarketResearchBundle:UserGroup:index.html.twig', array(
+            'entities' => $entities,
+        ));
     }
     /**
-     * Creates a new Geography entity.
+     * Creates a new UserGroup entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new Geography();
+        $entity = new UserGroup();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -46,26 +44,26 @@ class GeographyController extends AEMRRestController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('geography_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('usergroup_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('AEMRMarketResearchBundle:Geography:new.html.twig', array(
+        return $this->render('AEMRMarketResearchBundle:UserGroup:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Creates a form to create a Geography entity.
+     * Creates a form to create a UserGroup entity.
      *
-     * @param Geography $entity The entity
+     * @param UserGroup $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Geography $entity)
+    private function createCreateForm(UserGroup $entity)
     {
-        $form = $this->createForm(new GeographyType(), $entity, array(
-            'action' => $this->generateUrl('geography_create'),
+        $form = $this->createForm(new UserGroupType(), $entity, array(
+            'action' => $this->generateUrl('usergroup_create'),
             'method' => 'POST',
         ));
 
@@ -75,57 +73,60 @@ class GeographyController extends AEMRRestController
     }
 
     /**
-     * Displays a form to create a new Geography entity.
+     * Displays a form to create a new UserGroup entity.
      *
      */
     public function newAction()
     {
-        $entity = new Geography();
+        $entity = new UserGroup();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('AEMRMarketResearchBundle:Geography:new.html.twig', array(
+        return $this->render('AEMRMarketResearchBundle:UserGroup:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Geography entity.
+     * Finds and displays a UserGroup entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:Geography')->find($id);
+        $entity = $em->getRepository('AEMRMarketResearchBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Geography entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
-        return array(
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('AEMRMarketResearchBundle:UserGroup:show.html.twig', array(
             'entity'      => $entity,
-        );
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
-     * Displays a form to edit an existing Geography entity.
+     * Displays a form to edit an existing UserGroup entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:Geography')->find($id);
+        $entity = $em->getRepository('AEMRMarketResearchBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Geography entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('AEMRMarketResearchBundle:Geography:edit.html.twig', array(
+        return $this->render('AEMRMarketResearchBundle:UserGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -133,16 +134,16 @@ class GeographyController extends AEMRRestController
     }
 
     /**
-    * Creates a form to edit a Geography entity.
+    * Creates a form to edit a UserGroup entity.
     *
-    * @param Geography $entity The entity
+    * @param UserGroup $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Geography $entity)
+    private function createEditForm(UserGroup $entity)
     {
-        $form = $this->createForm(new GeographyType(), $entity, array(
-            'action' => $this->generateUrl('geography_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new UserGroupType(), $entity, array(
+            'action' => $this->generateUrl('usergroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -151,17 +152,17 @@ class GeographyController extends AEMRRestController
         return $form;
     }
     /**
-     * Edits an existing Geography entity.
+     * Edits an existing UserGroup entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:Geography')->find($id);
+        $entity = $em->getRepository('AEMRMarketResearchBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Geography entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -171,17 +172,17 @@ class GeographyController extends AEMRRestController
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('geography_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('usergroup_edit', array('id' => $id)));
         }
 
-        return $this->render('AEMRMarketResearchBundle:Geography:edit.html.twig', array(
+        return $this->render('AEMRMarketResearchBundle:UserGroup:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a Geography entity.
+     * Deletes a UserGroup entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -191,21 +192,21 @@ class GeographyController extends AEMRRestController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AEMRMarketResearchBundle:Geography')->find($id);
+            $entity = $em->getRepository('AEMRMarketResearchBundle:UserGroup')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Geography entity.');
+                throw $this->createNotFoundException('Unable to find UserGroup entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('geography'));
+        return $this->redirect($this->generateUrl('usergroup'));
     }
 
     /**
-     * Creates a form to delete a Geography entity by id.
+     * Creates a form to delete a UserGroup entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -214,7 +215,7 @@ class GeographyController extends AEMRRestController
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('geography_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('usergroup_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

@@ -1,21 +1,6 @@
-aemr_market_research:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing.yml"
-    prefix:   /
-aemr_market_research_geomodel:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodel.yml"
-    prefix:   /geomodel
-aemr_market_research_geomodelparameter:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodelparameter.yml"
-    prefix:   /geomodelparameter
-aemr_market_research_geomodelparameterindicator:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geomodelparameterindicator.yml"
-    prefix:   /geomodelparameterindicator
-aemr_market_research_geogroup:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geogroup.yml"
-    prefix:   /geogroup
-aemr_market_research_geography:
-    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geography.yml"
-    prefix:   /geography
 apps:
     resource: "@AppBundle/Controller/"
     type:     annotation
+api:
+    resource: "routing_rest.yml"
+    prefix:   /api

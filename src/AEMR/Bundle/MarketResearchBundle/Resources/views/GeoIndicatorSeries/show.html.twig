@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GeoIndicatorSeries</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Geoindicator_id</th>
+                <td>{{ entity.geoindicatorid }}</td>
+            </tr>
+            <tr>
+                <th>Geography_id</th>
+                <td>{{ entity.geographyid }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ entity.value }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ entity.date }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('geoindicatorseries') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('geoindicatorseries_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

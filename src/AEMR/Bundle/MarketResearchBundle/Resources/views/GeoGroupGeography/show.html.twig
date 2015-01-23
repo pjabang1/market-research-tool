@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GeoGroupGeography</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Geogroup_id</th>
+                <td>{{ entity.geogroupid }}</td>
+            </tr>
+            <tr>
+                <th>Geography_id</th>
+                <td>{{ entity.geographyid }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('geogroupgeography') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('geogroupgeography_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

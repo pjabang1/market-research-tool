@@ -22,7 +22,7 @@ class GeoIndicator
     /**
      * @var string
      */
-    private $geo_type;
+    private $geo_type = '';
 
     /**
      * @var string
@@ -32,17 +32,19 @@ class GeoIndicator
     /**
      * @var string
      */
-    private $date_type;
+    private $date_type = '';
 
     /**
      * @var string
      */
-    private $description;
+    private $description = '';
 
     /**
      * @var integer
      */
     private $id;
+    
+
 
 
     /**
@@ -195,22 +197,22 @@ class GeoIndicator
     /**
      * @var string
      */
-    private $periodicity;
+    private $periodicity = '';
 
     /**
      * @var string
      */
-    private $base_period;
+    private $base_period = '';
 
     /**
      * @var string
      */
-    private $status;
+    private $status = '';
 
     /**
      * @var string
      */
-    private $aggregation_method;
+    private $aggregation_method = '';
 
 
     /**
@@ -244,6 +246,9 @@ class GeoIndicator
      */
     public function setBasePeriod($basePeriod)
     {
+        if(null === $basePeriod) {
+            $basePeriod = '';
+        }
         $this->base_period = $basePeriod;
 
         return $this;
@@ -267,6 +272,9 @@ class GeoIndicator
      */
     public function setStatus($status)
     {
+         if(null === $status) {
+            $status = '';
+        }
         $this->status = $status;
 
         return $this;
@@ -290,6 +298,9 @@ class GeoIndicator
      */
     public function setAggregationMethod($aggregationMethod)
     {
+        if(null === $aggregationMethod) {
+            $aggregationMethod = '';
+        }
         $this->aggregation_method = $aggregationMethod;
 
         return $this;
@@ -318,6 +329,7 @@ class GeoIndicator
      */
     public function setSource($source)
     {
+        
         $this->source = $source;
 
         return $this;

@@ -1,0 +1,30 @@
+geoindicatorseries:
+    path:     /
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:index" }
+
+geoindicatorseries_show:
+    path:     /{id}/show
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:show" }
+
+geoindicatorseries_new:
+    path:     /new
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:new" }
+
+geoindicatorseries_create:
+    path:     /create
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:create" }
+    requirements: { _method: post }
+
+geoindicatorseries_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:edit" }
+
+geoindicatorseries_update:
+    path:     /{id}/update
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:update" }
+    requirements: { _method: post|put }
+
+geoindicatorseries_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorSeries:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,30 @@
+usergroup:
+    path:     /
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:index" }
+
+usergroup_show:
+    path:     /{id}/show
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:show" }
+
+usergroup_new:
+    path:     /new
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:new" }
+
+usergroup_create:
+    path:     /create
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:create" }
+    requirements: { _method: post }
+
+usergroup_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:edit" }
+
+usergroup_update:
+    path:     /{id}/update
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:update" }
+    requirements: { _method: post|put }
+
+usergroup_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AEMRMarketResearchBundle:UserGroup:delete" }
+    requirements: { _method: post|delete }

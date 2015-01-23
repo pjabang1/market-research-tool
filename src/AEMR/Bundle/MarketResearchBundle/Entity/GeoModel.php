@@ -1,7 +1,10 @@
 <?php
 
 namespace AEMR\Bundle\MarketResearchBundle\Entity;
-
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,6 +14,7 @@ class GeoModel
 {
     /**
      * @var string
+     * 
      */
     private $name;
 
@@ -47,6 +51,7 @@ class GeoModel
      * Get name
      *
      * @return string 
+     * 
      */
     public function getName()
     {

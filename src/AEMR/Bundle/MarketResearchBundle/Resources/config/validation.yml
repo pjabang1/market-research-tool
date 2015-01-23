@@ -1,0 +1,6 @@
+AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicator:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+        fields: [code]
+        message: 'Indicator code : {{code}} already exists'
+    

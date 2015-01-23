@@ -2,39 +2,36 @@
 
 namespace AEMR\Bundle\MarketResearchBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use AEMR\Bundle\MarketResearchBundle\Entity\GeoModel;
 use AEMR\Bundle\MarketResearchBundle\Form\GeoModelType;
 
 /**
  * GeoModel controller.
- *
+ * @Rest\View()
  */
-class GeoModelController extends Controller
-{
+class GeoModelController extends AEMRRestController {
 
     /**
      * Lists all GeoModel entities.
      *
+     * 
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->findAll();
-
-        return $this->render('AEMRMarketResearchBundle:GeoModel:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        return array(
+            'models' => $entities,
+        );
     }
+
     /**
      * Creates a new GeoModel entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new GeoModel();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -48,8 +45,8 @@ class GeoModelController extends Controller
         }
 
         return $this->render('AEMRMarketResearchBundle:GeoModel:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -60,8 +57,7 @@ class GeoModelController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(GeoModel $entity)
-    {
+    private function createCreateForm(GeoModel $entity) {
         $form = $this->createForm(new GeoModelType(), $entity, array(
             'action' => $this->generateUrl('geomodel_create'),
             'method' => 'POST',
@@ -76,14 +72,13 @@ class GeoModelController extends Controller
      * Displays a form to create a new GeoModel entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new GeoModel();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AEMRMarketResearchBundle:GeoModel:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -91,8 +86,7 @@ class GeoModelController extends Controller
      * Finds and displays a GeoModel entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
@@ -104,8 +98,8 @@ class GeoModelController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AEMRMarketResearchBundle:GeoModel:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +107,7 @@ class GeoModelController extends Controller
      * Displays a form to edit an existing GeoModel entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
@@ -127,21 +120,20 @@ class GeoModelController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a GeoModel entity.
-    *
-    * @param GeoModel $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(GeoModel $entity)
-    {
+     * Creates a form to edit a GeoModel entity.
+     *
+     * @param GeoModel $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(GeoModel $entity) {
         $form = $this->createForm(new GeoModelType(), $entity, array(
             'action' => $this->generateUrl('geomodel_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -151,12 +143,12 @@ class GeoModelController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing GeoModel entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
@@ -176,17 +168,17 @@ class GeoModelController extends Controller
         }
 
         return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a GeoModel entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -212,13 +204,13 @@ class GeoModelController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('geomodel_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('geomodel_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

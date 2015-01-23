@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GeoIndicatorType extends AbstractType
+class ClientType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -17,13 +17,7 @@ class GeoIndicatorType extends AbstractType
         $builder
             ->add('code')
             ->add('name')
-            ->add('geo_type')
-            ->add('value_type')
-            ->add('periodicity')
-            ->add('base_period')
-            ->add('status')
-            ->add('source')
-            ->add('aggregation_method')
+            ->add('logo')
             ->add('description')
         ;
     }
@@ -34,17 +28,15 @@ class GeoIndicatorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'csrf_protection' => false,
-            'data_class' => 'AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicator'
+            'data_class' => 'AEMR\Bundle\MarketResearchBundle\Entity\Client'
         ));
     }
-
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'geoindicator';
+        return 'client';
     }
 }
