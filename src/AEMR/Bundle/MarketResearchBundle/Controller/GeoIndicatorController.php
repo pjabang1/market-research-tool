@@ -20,15 +20,9 @@ class GeoIndicatorController extends AEMRRestController {
      *
      */
     public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AEMRMarketResearchBundle:GeoIndicator')->findAll();
-
-        // $entities = $this->get('database_connection')->fetchAll('SELECT * FROM base_geoindicators');
-        return array(
-            'indicators' => $entities,
-            'count' => count($entities)
-        );
+        $service = $this->get('geoindicator_service');
+        $entities = $service->retrieve($this->getRequest());
+        return array('geoindicators' => $entities);
     }
 
     /**

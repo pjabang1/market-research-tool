@@ -10,8 +10,8 @@ class GeMatrix {
     protected $description;
     
     protected $code = 'geMatrix';
-    
-    
+
+
     public function getDescription() {
         return $this->description;
     }
@@ -29,9 +29,11 @@ class GeMatrix {
         $this->code = $code;
         return $this;
     }
+    
+     
 
     
 
     
 }
-?>
+

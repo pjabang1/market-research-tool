@@ -2,8 +2,10 @@
 
 namespace AEMR\Bundle\MarketResearchBundle\Controller;
 
-use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController;
+use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController AS Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Util\Codes;
 use AEMR\Bundle\MarketResearchBundle\Entity\GeoModel;
 use AEMR\Bundle\MarketResearchBundle\Form\GeoModelType;
 
@@ -11,7 +13,7 @@ use AEMR\Bundle\MarketResearchBundle\Form\GeoModelType;
  * GeoModel controller.
  * @Rest\View()
  */
-class GeoModelController extends AEMRRestController {
+class GeoModelController extends Controller {
 
     /**
      * Lists all GeoModel entities.
@@ -19,12 +21,37 @@ class GeoModelController extends AEMRRestController {
      * 
      */
     public function indexAction() {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->findAll();
+        $service = $this->get('geomodel_service');
+        $entities = $service->retrieve($this->getRequest());
+        return array('geomodels' => $entities);
+    }
+    
+    
+    
+    /**
+     * 
+     * @return array
+     */
+    public function valuesAction() {
+        $service = $this->get('geomodel_service');
+        $entities = $service->getValues($this->getRequest());
         return array(
-            'models' => $entities,
+            'values' => $entities,
+            'geographies' => $service->getGeographies($this->getRequest()),
+            'indicators' => $service->getIndicators($this->getRequest())
         );
+    }
+
+    public function geographiesAction() {
+        $service = $this->get('geomodel_service');
+        $entities = $service->getGeographies($this->getRequest());
+        return array('geographies' => $entities);
+    }
+
+    public function indicatorsAction() {
+        $service = $this->get('geomodel_service');
+        $entities = $service->getIndicators($this->getRequest());
+        return array('indicators' => $entities);
     }
 
     /**

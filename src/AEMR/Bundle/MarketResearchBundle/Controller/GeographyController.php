@@ -2,7 +2,7 @@
 
 namespace AEMR\Bundle\MarketResearchBundle\Controller;
 
-use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController;
+use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController AS Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use AEMR\Bundle\MarketResearchBundle\Entity\Geography;
 use AEMR\Bundle\MarketResearchBundle\Form\GeographyType;
@@ -12,7 +12,7 @@ use AEMR\Bundle\MarketResearchBundle\Form\GeographyType;
  *
  * @Rest\View()
  */
-class GeographyController extends AEMRRestController 
+class GeographyController extends Controller 
 {
 
     /**

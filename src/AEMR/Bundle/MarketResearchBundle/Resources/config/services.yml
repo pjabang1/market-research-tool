@@ -5,3 +5,15 @@ services:
 #    aemr_market_research.example:
 #        class: %aemr_market_research.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+      geogroup_service:
+        class:     AEMR\Bundle\MarketResearchBundle\Service\GeoGroupService
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+      geoindicator_service:
+        class:     AEMR\Bundle\MarketResearchBundle\Service\GeoIndicatorService
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+      geomodel_service:
+        class:     AEMR\Bundle\MarketResearchBundle\Service\GeoModelService
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]

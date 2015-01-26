@@ -1,7 +1,15 @@
 geomodel:
     path:     /
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:index" }
-
+geomodel_values:
+    path:     /values
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:values" }
+geomodel_geographies:
+    path:     /geographies
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:geographies" }
+geomodel_indicators:
+    path:     /indicators
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:indicators" }
 geomodel_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:show" }

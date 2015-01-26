@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping>
-    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\User" table="base_users">
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\User" table="base_users" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\UserRepository">
 	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
 	<id name="id" type="bigint" column="id">
 	    <generator strategy="IDENTITY"/>

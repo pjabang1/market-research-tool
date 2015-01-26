@@ -2,39 +2,34 @@
 
 namespace AEMR\Bundle\MarketResearchBundle\Controller;
 
+use AEMR\Bundle\MarketResearchBundle\Controller\AEMRRestController AS Controller;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use FOS\RestBundle\Util\Codes;
 use AEMR\Bundle\MarketResearchBundle\Entity\GeoGroup;
 use AEMR\Bundle\MarketResearchBundle\Form\GeoGroupType;
 
 /**
  * GeoGroup controller.
- *
+ * @Rest\View()
  */
-class GeoGroupController extends Controller
-{
+class GeoGroupController extends Controller {
 
     /**
      * Lists all GeoGroup entities.
      *
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('AEMRMarketResearchBundle:GeoGroup')->findAll();
-
-        return $this->render('AEMRMarketResearchBundle:GeoGroup:index.html.twig', array(
-            'entities' => $entities,
-        ));
+    public function indexAction() {
+        $service = $this->get('geogroup_service');
+        $entities = $service->retrieve($this->getRequest());
+        return array('geogroups' => $entities);
     }
+
     /**
      * Creates a new GeoGroup entity.
      *
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new GeoGroup();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -48,8 +43,8 @@ class GeoGroupController extends Controller
         }
 
         return $this->render('AEMRMarketResearchBundle:GeoGroup:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -60,8 +55,7 @@ class GeoGroupController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(GeoGroup $entity)
-    {
+    private function createCreateForm(GeoGroup $entity) {
         $form = $this->createForm(new GeoGroupType(), $entity, array(
             'action' => $this->generateUrl('geogroup_create'),
             'method' => 'POST',
@@ -76,14 +70,13 @@ class GeoGroupController extends Controller
      * Displays a form to create a new GeoGroup entity.
      *
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new GeoGroup();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return $this->render('AEMRMarketResearchBundle:GeoGroup:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -91,8 +84,7 @@ class GeoGroupController extends Controller
      * Finds and displays a GeoGroup entity.
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoGroup')->find($id);
@@ -104,8 +96,8 @@ class GeoGroupController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AEMRMarketResearchBundle:GeoGroup:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -113,8 +105,7 @@ class GeoGroupController extends Controller
      * Displays a form to edit an existing GeoGroup entity.
      *
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoGroup')->find($id);
@@ -127,21 +118,20 @@ class GeoGroupController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('AEMRMarketResearchBundle:GeoGroup:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-    * Creates a form to edit a GeoGroup entity.
-    *
-    * @param GeoGroup $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(GeoGroup $entity)
-    {
+     * Creates a form to edit a GeoGroup entity.
+     *
+     * @param GeoGroup $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(GeoGroup $entity) {
         $form = $this->createForm(new GeoGroupType(), $entity, array(
             'action' => $this->generateUrl('geogroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -151,12 +141,12 @@ class GeoGroupController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing GeoGroup entity.
      *
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('AEMRMarketResearchBundle:GeoGroup')->find($id);
@@ -176,17 +166,17 @@ class GeoGroupController extends Controller
         }
 
         return $this->render('AEMRMarketResearchBundle:GeoGroup:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
+
     /**
      * Deletes a GeoGroup entity.
      *
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -212,13 +202,13 @@ class GeoGroupController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('geogroup_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('geogroup_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

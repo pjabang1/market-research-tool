@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping>
-    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicatorSeries" table="base_geoindicatorseries">
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicatorSeries" table="base_geoindicatorseries" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\GeoIndicatorSeriesRepository">
         <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
         <id name="id" type="bigint" column="id">
             <generator strategy="IDENTITY"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping>
-    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameter" table="base_geomodelparameters">
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameter" table="base_geomodelparameters" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\GeoModelParameterRepository">
 	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
 	<id name="id" type="bigint" column="id">
 	    <generator strategy="IDENTITY"/>
