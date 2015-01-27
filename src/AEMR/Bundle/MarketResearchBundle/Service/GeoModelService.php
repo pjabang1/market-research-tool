@@ -40,8 +40,7 @@ class GeoModelService extends AEMRService {
                 LEFT JOIN base_geoindicatorseries gis ON gis.geoindicator_id = gi.id
                 AND gis.geography_id = g.id
                 WHERE gm.id = :id 
-                AND gis.date =2013
-                AND gmp.name =  'y'
+                AND gis.date =2013 
                 ORDER BY  `g`.`name` ASC";
 
         $stmt = $this->getConnection()->prepare($sql);

@@ -35,10 +35,18 @@ class GeoModelController extends Controller {
     public function valuesAction() {
         $service = $this->get('geomodel_service');
         $entities = $service->getValues($this->getRequest());
+        $hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelMatrixHydrator();
+        
+        $indicators = $hydrator->hydrateIndicators($service->getIndicators($this->getRequest()));
+        $values = $hydrator->hydrateValues($entities);
+        $geographies = $hydrator->hydrateGeographies($service->getGeographies($this->getRequest()), $values);
+        
+        
         return array(
-            'values' => $entities,
-            'geographies' => $service->getGeographies($this->getRequest()),
-            'indicators' => $service->getIndicators($this->getRequest())
+            // 'values' => $values,
+            'geographies' => $geographies,
+            'indicators' => $indicators,
+            'settings' => array('max_weight' => 100)
         );
     }
 
