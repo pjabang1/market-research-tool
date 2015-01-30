@@ -32,7 +32,7 @@ class GeoModelService extends AEMRService {
         );
 
         // return $request->request->all();
-        $sql = "SELECT gm.id AS geomodel_id, g.id AS geography_id, gi.id AS geoindicator_id, gm.`algorithm_code`, gmpi.weight,gmp.id AS parameter_id, gmp.name AS parameter, gis.value AS value, gis.date
+        $sql = "SELECT g.id AS geography_id, gi.id AS geoindicator_id, gmpi.weight,gmp.id AS parameter_id, gis.value AS value
                 FROM  `base_geomodels` gm CROSS JOIN base_geogroups gg 
                 LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gg.`id` 
                 LEFT JOIN base_geographies g ON g.id = ggg.geography_id
