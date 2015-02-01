@@ -24,6 +24,18 @@ class GeoGroupController extends Controller {
         $entities = $service->retrieve($this->getRequest());
         return array('geogroups' => $entities);
     }
+	
+	/**
+     * Lists all GeoGroup entities.
+     *
+     */
+    public function geographiesAction() {
+        $service = $this->get('geogroup_service');
+		$return = array();
+		$return['group'] = $service->get($this->getRequest());
+		$return['geographies'] = $service->getGeographies($this->getRequest());
+        return $return;
+    }
 
     /**
      * Creates a new GeoGroup entity.

@@ -27,7 +27,7 @@ class GeographyController extends Controller
         $entities = $em->getRepository('AEMRMarketResearchBundle:Geography')->findAll();
 
         return array(
-            'countries' => $entities
+            'geographies' => $entities
         );
 
     }

@@ -13,7 +13,21 @@ class GeoIndicatorService extends AEMRService {
      */
     public function retrieve($request) {
 
-        $entities = $this->getEntityManager()->getRepository('AEMRMarketResearchBundle:GeoIndicator')->findAll();
+        // $entities = $this->getEntityManager()->getRepository('AEMRMarketResearchBundle:GeoIndicator')->findAll();
+		
+		$query_select = "SELECT i 
+      FROM AEMRMarketResearchBundle:GeoIndicator i 
+"
+    ;
+
+
+$query = $this->getEntityManager()
+      ->createQuery($query_select)
+      // ->setParameters($params)
+      ->setMaxResults(50);
+    ;
+
+$entities = $query->getResult();
 
         return $entities;
     }

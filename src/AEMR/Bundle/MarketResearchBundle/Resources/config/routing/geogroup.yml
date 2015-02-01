@@ -2,6 +2,10 @@ geogroup:
     path:     /
     defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:index" }
 
+geogroup_geographies:
+    path:     /geographies
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:geographies" }
+    
 geogroup_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:show" }
