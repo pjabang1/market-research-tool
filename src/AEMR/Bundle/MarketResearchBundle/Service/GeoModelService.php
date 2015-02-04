@@ -32,16 +32,16 @@ class GeoModelService extends AEMRService {
         );
 
         // return $request->request->all();
-        $sql = "SELECT g.id AS geography_id, gi.id AS geoindicator_id, gmpi.weight,gmp.id AS parameter_id, gis.value AS value
-                FROM  `base_geomodels` gm CROSS JOIN base_geogroups gg 
-                LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gg.`id` 
-                LEFT JOIN base_geographies g ON g.id = ggg.geography_id
+        $sql = "SELECT g.id AS geography_id, gi.id AS geoindicator_id, gmpi.weight,gmp.id AS parameter_id,  gis.value AS value
+                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg 
+                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id` 
+                LEFT JOIN base_geographies g ON g.id = ggg.entity_id
                 LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
                 LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id
                 LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id
                 LEFT JOIN base_geoindicatorseries gis ON gis.geoindicator_id = gi.id
                 AND gis.geography_id = g.id
-                WHERE gg.id = :geogroup_id AND gm.id = :id AND gis.date = :date 
+                WHERE gg.id = :geogroup_id AND gm.id = :id AND gis.date = :date AND gg.entity = 'geography' 
                 ORDER BY  `g`.`name` ASC";
 
         $stmt = $this->getConnection()->prepare($sql);
@@ -61,15 +61,26 @@ class GeoModelService extends AEMRService {
             'geogroup_id' => $request->query->get('geogroup_id'),
         );
         $sql = "SELECT g.*
-                FROM  `base_geomodels` gm CROSS JOIN base_geogroups gg 
-                LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gg.`id` 
-                LEFT JOIN base_geographies g ON g.id = ggg.geography_id 
-                WHERE gg.id = :geogroup_id AND gm.id = :id 
+                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg 
+                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id` 
+                LEFT JOIN base_geographies g ON g.id = ggg.entity_id 
+                WHERE gg.id = :geogroup_id AND gm.id = :id AND gg.entity = 'geography' 
                 ORDER BY  `g`.`name` ASC";
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute($params);
         //I used FETCH_COLUMN because I only needed one Column.
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+      /**
+     * 
+     * @param type $request
+     * @return type
+     */
+    public function getParameters($request) {
+        $q = $this->getEntityManager()->createQuery("SELECT gmp FROM AEMRMarketResearchBundle:GeoModelParameter gmp WHERE gmp.geomodel_id = :geomodel_id");
+        $q->setParameter(':geomodel_id', $request->query->get('id'));
+        return $q->getArrayResult();
     }
 
     /**

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\EntityGroupEntity" table="base_entitygroupentities" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\EntityGroupEntityRepository">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+        <field name="entitygroup_id" type="bigint" column="entitygroup_id" />
+	<field name="entity_id" type="bigint" column="entity_id" />
+	<unique-constraints>
+            <unique-constraint columns="entitygroup_id,entity_id" name="entitygroup_entity_id" />
+        </unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

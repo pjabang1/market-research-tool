@@ -28,9 +28,13 @@ class GeoGroup
      * @var integer
      */
     private $id;
+    
+    public function __construct() {
+        $this->setModified(new \DateTime());
+        $this->setCreated(new \DateTime());
+    }
 
-
-    /**
+        /**
      * Set name
      *
      * @param string $name
@@ -107,5 +111,117 @@ class GeoGroup
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    private $modified;
+
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return GeoGroup
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return GeoGroup
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+    /**
+     * @var integer
+     */
+    private $user_id;
+
+    /**
+     * @var integer
+     */
+    private $client_id;
+
+
+    /**
+     * Set user_id
+     *
+     * @param integer $userId
+     * @return GeoGroup
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get user_id
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set client_id
+     *
+     * @param integer $clientId
+     * @return GeoGroup
+     */
+    public function setClientId($clientId)
+    {
+        $this->client_id = $clientId;
+
+        return $this;
+    }
+
+    /**
+     * Get client_id
+     *
+     * @return integer 
+     */
+    public function getClientId()
+    {
+        return $this->client_id;
     }
 }

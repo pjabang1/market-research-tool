@@ -1,0 +1,13 @@
+geoindicatorgroup:
+    path:     /
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorGroup:index" }
+
+geoindicatorgroup_geographies:
+    path:     /indicators
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorGroup:indicators" }
+    
+geoindicatorgroup_geographies_replace:
+    path:     /indicators/replace
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicatorGroup:indicatorsReplace" }
+    requirements: { _method: post|put }
+    

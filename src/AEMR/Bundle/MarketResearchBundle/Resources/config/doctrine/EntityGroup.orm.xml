@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+    <entity name="AEMR\Bundle\MarketResearchBundle\Entity\EntityGroup" table="base_entitygroups" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\EntityGroupRepository">
+	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+	<id name="id" type="bigint" column="id">
+	    <generator strategy="IDENTITY"/>
+	</id>
+	<field name="name" type="string" column="name" length="255" />
+        <field name="entity" type="string" column="entity" length="50" />
+	<field name="type" type="string" column="type" length="50" nullable="true" default="Country" />
+        <field name="user_id" type="bigint" column="user_id" nullable="true" />
+        <field name="client_id" type="bigint" column="client_id" nullable="true" />
+	<field name="description" type="string" column="description" nullable="true" length="255" />
+        <field name="created" type="datetime" />
+        <field name="modified" type="datetime" />
+	<indexes>
+	    <index name="name" columns="name" />
+            <index name="entity" columns="entity" />
+            <index name="user_id" columns="user_id" />
+            <index name="client_id" columns="client_id" />
+	</indexes>
+	<unique-constraints>
+	</unique-constraints>
+	<lifecycle-callbacks/>
+    </entity>
+</doctrine-mapping>

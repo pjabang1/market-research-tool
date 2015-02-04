@@ -21,6 +21,10 @@ api_aemr_market_research_geogroup:
     resource: "@AEMRMarketResearchBundle/Resources/config/routing/geogroup.yml"
     type: rest
     prefix:   /geogroup
+api_aemr_market_research_geogindicatorgroup:
+    resource: "@AEMRMarketResearchBundle/Resources/config/routing/geoindicatorgroup.yml"
+    type: rest
+    prefix:   /geoindicatorgroup
 api_aemr_market_research_geography:
     resource: "@AEMRMarketResearchBundle/Resources/config/routing/geography.yml"
     type: rest

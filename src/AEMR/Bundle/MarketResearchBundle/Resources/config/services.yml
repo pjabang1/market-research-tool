@@ -9,6 +9,10 @@ services:
         class:     AEMR\Bundle\MarketResearchBundle\Service\GeoGroupService
         calls:
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+      geoindicatorgroup_service:
+        class:     AEMR\Bundle\MarketResearchBundle\Service\GeoIndicatorGroupService
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]      
       geoindicator_service:
         class:     AEMR\Bundle\MarketResearchBundle\Service\GeoIndicatorService
         calls:

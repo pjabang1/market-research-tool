@@ -5,10 +5,12 @@
 	<id name="id" type="bigint" column="id">
 	    <generator strategy="IDENTITY"/>
 	</id>
+        <field name="code" type="string" column="code" length="20" />
 	<field name="name" type="string" column="name" length="20" />
 	<field name="geomodel_id" type="bigint" column="geomodel_id" />
         <field name="aggregation_type" type="string" column="aggregation_type" length="20" />
 	<indexes>
+            <index name="code" columns="code" />
 	    <index name="name" columns="name" />
             <index name="geomodel_id" columns="geomodel_id" />
 	</indexes>

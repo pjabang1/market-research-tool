@@ -6,6 +6,11 @@ geogroup_geographies:
     path:     /geographies
     defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:geographies" }
     
+geogroup_geographies_replace:
+    path:     /geographies/replace
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:geographiesReplace" }
+    requirements: { _method: post|put }
+    
 geogroup_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoGroup:show" }
