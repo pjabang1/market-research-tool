@@ -136,4 +136,32 @@ class GeoModelParameter
     {
         return $this->code;
     }
+    /**
+     * @var string
+     */
+    private $axis;
+
+
+    /**
+     * Set axis
+     *
+     * @param string $axis
+     * @return GeoModelParameter
+     */
+    public function setAxis($axis)
+    {
+        $this->axis = $axis;
+
+        return $this;
+    }
+
+    /**
+     * Get axis
+     *
+     * @return string 
+     */
+    public function getAxis()
+    {
+        return $this->axis;
+    }
 }

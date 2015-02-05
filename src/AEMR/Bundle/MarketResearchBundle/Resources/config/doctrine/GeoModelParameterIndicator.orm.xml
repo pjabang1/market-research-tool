@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping>
     <entity name="AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameterIndicator" table="base_geomodelparameterindicators" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\GeoModelParameterInidcatorRepository">
-	<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
-	<id name="id" type="bigint" column="id">
-	    <generator strategy="IDENTITY"/>
-	</id>
+        <change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+        <id name="id" type="bigint" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
         <field name="geomodelparameter_id" type="bigint" column="geomodelparameter_id" />
         <field name="geoindicator_id" type="bigint" column="geoindicator_id" />
         <field name="weight" type="decimal" column="weight" precision="24" scale="6" />
+        <field name="relevance_sort" type="string" column="relevance_sort" length="10" />
         <field name="aggregation_type" type="string" column="aggregation_type" length="20" />
-	<indexes>
-            <index name="geomodelparameter_geoindicator" columns="geomodelparameter_id,geoindicator_id" />
-	</indexes>
-	<unique-constraints>
-	</unique-constraints>
-	<lifecycle-callbacks/>
+        <indexes>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="geomodelparameter_geoindicator" columns="geomodelparameter_id,geoindicator_id" />
+        </unique-constraints>
+        <lifecycle-callbacks/>
     </entity>
 </doctrine-mapping>

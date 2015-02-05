@@ -136,4 +136,32 @@ class GeoModelParameterIndicator
     {
         return $this->id;
     }
+    /**
+     * @var string
+     */
+    private $relevance_sort;
+
+
+    /**
+     * Set relevance_sort
+     *
+     * @param string $relevanceSort
+     * @return GeoModelParameterIndicator
+     */
+    public function setRelevanceSort($relevanceSort)
+    {
+        $this->relevance_sort = $relevanceSort;
+
+        return $this;
+    }
+
+    /**
+     * Get relevance_sort
+     *
+     * @return string 
+     */
+    public function getRelevanceSort()
+    {
+        return $this->relevance_sort;
+    }
 }

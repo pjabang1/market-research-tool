@@ -92,7 +92,7 @@ class GeoModelService extends AEMRService {
         $params = array(
             'id' => $request->query->get('id')
         );
-        $sql = "SELECT gmp.id AS parameter_id, gmp.name AS parameter_name, gmpi.geoindicator_id, gmpi.weight, gi.* 
+        $sql = "SELECT gmp.id AS parameter_id, gmp.name AS parameter_name, gmpi.geoindicator_id, gmpi.weight, gi.*, gmpi.relevance_sort 
                 FROM  `base_geomodels` gm
                 LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
                 LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id

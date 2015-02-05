@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 04, 2015 at 01:32 PM
+-- Generation Time: Feb 05, 2015 at 06:05 PM
 -- Server version: 5.5.29
 -- PHP Version: 5.4.6-1ubuntu1.4
 
@@ -35290,27 +35290,29 @@ CREATE TABLE IF NOT EXISTS `base_geomodelparameterindicators` (
   `geoindicator_id` bigint(20) NOT NULL,
   `weight` decimal(24,6) NOT NULL,
   `aggregation_type` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `relevance_sort` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `geomodelparameter_geoindicator` (`geomodelparameter_id`,`geoindicator_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+  UNIQUE KEY `geomodelparameter_geoindicator` (`geomodelparameter_id`,`geoindicator_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `base_geomodelparameterindicators`
 --
 
-INSERT INTO `base_geomodelparameterindicators` (`id`, `geomodelparameter_id`, `geoindicator_id`, `weight`, `aggregation_type`) VALUES
-(1, 1, 1159, 100.000000, 'NA'),
-(2, 2, 1266, 5.000000, 'NA'),
-(3, 2, 1267, 5.000000, 'NA'),
-(4, 2, 1268, 10.000000, 'NA'),
-(5, 2, 1269, 10.000000, 'NA'),
-(6, 2, 1270, 10.000000, 'NA'),
-(7, 2, 1271, 10.000000, 'NA'),
-(8, 2, 1272, 10.000000, 'NA'),
-(9, 2, 1273, 10.000000, 'NA'),
-(10, 2, 1274, 10.000000, 'NA'),
-(11, 2, 1275, 10.000000, 'NA'),
-(12, 2, 1276, 10.000000, 'NA');
+INSERT INTO `base_geomodelparameterindicators` (`id`, `geomodelparameter_id`, `geoindicator_id`, `weight`, `aggregation_type`, `relevance_sort`) VALUES
+(1, 1, 1159, 100.000000, 'NA', 'DESC'),
+(2, 2, 1266, 5.000000, 'NA', 'ASC'),
+(3, 2, 1267, 5.000000, 'NA', 'ASC'),
+(4, 2, 1268, 10.000000, 'NA', 'ASC'),
+(5, 2, 1269, 10.000000, 'NA', 'ASC'),
+(6, 2, 1270, 10.000000, 'NA', 'ASC'),
+(7, 2, 1271, 10.000000, 'NA', 'ASC'),
+(8, 2, 1272, 10.000000, 'NA', 'ASC'),
+(9, 2, 1273, 10.000000, 'NA', 'ASC'),
+(10, 2, 1274, 10.000000, 'NA', 'ASC'),
+(11, 2, 1275, 10.000000, 'NA', 'ASC'),
+(12, 2, 1276, 10.000000, 'NA', 'ASC'),
+(13, 1, 1156, 80.000000, 'NA', 'DESC');
 
 -- --------------------------------------------------------
 
@@ -35320,10 +35322,11 @@ INSERT INTO `base_geomodelparameterindicators` (`id`, `geomodelparameter_id`, `g
 
 CREATE TABLE IF NOT EXISTS `base_geomodelparameters` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `geomodel_id` bigint(20) NOT NULL,
   `aggregation_type` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `axis` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `geomodel_id` (`geomodel_id`),
@@ -35334,9 +35337,9 @@ CREATE TABLE IF NOT EXISTS `base_geomodelparameters` (
 -- Dumping data for table `base_geomodelparameters`
 --
 
-INSERT INTO `base_geomodelparameters` (`id`, `name`, `geomodel_id`, `aggregation_type`, `code`) VALUES
-(1, 'Market Growth ', 1, '0', 'MG'),
-(2, 'Competitive Strength', 1, '0', 'CS');
+INSERT INTO `base_geomodelparameters` (`id`, `name`, `geomodel_id`, `aggregation_type`, `code`, `axis`) VALUES
+(1, 'Business Unit Strength', 1, '0', 'BUS', 'x'),
+(2, 'Industry Attractiveness', 1, '0', 'IA', 'y');
 
 -- --------------------------------------------------------
 
