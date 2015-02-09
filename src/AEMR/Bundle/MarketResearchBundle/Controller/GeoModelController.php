@@ -15,250 +15,224 @@ use AEMR\Bundle\MarketResearchBundle\Form\GeoModelType;
  */
 class GeoModelController extends Controller {
 
-    /**
-     * Lists all GeoModel entities.
-     *
-     * 
-     */
-    public function indexAction() {
-        $service = $this->get('geomodel_service');
-        $entities = $service->retrieve($this->getRequest());
-        return array('geomodels' => $entities);
-    }
-    
-    
-    
-    /**
-     * 
-     * @return array
-     */
-    public function valuesAction() {
-        $service = $this->get('geomodel_service');
-        $entities = $service->getValues($this->getRequest());
-        $hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelMatrixHydrator();
-        
-        // $indicators = $hydrator->hydrateIndicators($service->getIndicators($this->getRequest()));
-        $values = $hydrator->hydrateValues($entities);
-        $geographies = $hydrator->hydrateGeographies($service->getGeographies($this->getRequest()), $values);
-        
-        
-        
-        
-        return array(
-            // 'values' => $values,
-            'geographies' => $geographies,
-            'settings' => array('max_weight' => 100)
-        );
-    }
+	/**
+	 * Lists all GeoModel entities.
+	 *
+	 * 
+	 */
+	public function indexAction() {
+		$service = $this->get('geomodel_service');
+		$entities = $service->retrieve($this->getRequest());
+		return array('geomodels' => $entities);
+	}
 
-    public function geographiesAction() {
-        $service = $this->get('geomodel_service');
-        $entities = $service->getGeographies($this->getRequest());
-        return array('geographies' => $entities);
-    }
+	/**
+	 * 
+	 * @return array
+	 */
+	public function valuesAction() {
+		$service = $this->get('geomodel_service');
+		$entities = $service->getValues($this->getRequest());
+		$hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelMatrixHydrator();
 
-    public function indicatorsAction() {
-        $service = $this->get('geomodel_service');
-        $hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelMatrixHydrator();
-        
-        $parameters = $service->getParameters($this->getRequest());
-        $indicators = $hydrator->hydrateIndicators($service->getIndicators($this->getRequest()));
+		// $indicators = $hydrator->hydrateIndicators($service->getIndicators($this->getRequest()));
+		$values = $hydrator->hydrateValues($entities);
+		$geographies = $hydrator->hydrateGeographies($service->getGeographies($this->getRequest()), $values);
 
-        return array('indicators' => $indicators, 'parameters' => $parameters);
-    }
-    
-     public function parametersAction() {
-        $service = $this->get('geomodel_service');
-        
-        $parameters = $service->getParameters($this->getRequest());
 
-        return array('parameters' => $parameters);
-    }
 
-    /**
-     * Creates a new GeoModel entity.
-     *
-     */
-    public function createAction(Request $request) {
-        $entity = new GeoModel();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+		return array(
+			// 'values' => $values,
+			'geographies' => $geographies,
+			'settings' => array('max_weight' => 100)
+		);
+	}
 
-            return $this->redirect($this->generateUrl('geomodel_show', array('id' => $entity->getId())));
-        }
+	public function geographiesAction() {
+		$service = $this->get('geomodel_service');
+		$entities = $service->getGeographies($this->getRequest());
+		return array('geographies' => $entities);
+	}
 
-        return $this->render('AEMRMarketResearchBundle:GeoModel:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
+	public function indicatorsAction() {
+		$service = $this->get('geomodel_service');
+		$hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelMatrixHydrator();
 
-    /**
-     * Creates a form to create a GeoModel entity.
-     *
-     * @param GeoModel $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(GeoModel $entity) {
-        $form = $this->createForm(new GeoModelType(), $entity, array(
-            'action' => $this->generateUrl('geomodel_create'),
-            'method' => 'POST',
-        ));
+		$parameters = $service->getParameters($this->getRequest());
+		$indicators = $hydrator->hydrateIndicators($service->getIndicators($this->getRequest()));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+		return array(
+			'model' => $service->getModel($this->getRequest()->query->get('id')),
+			'indicators' => $indicators, 
+			'parameters' => $parameters
+				);
+	}
 
-        return $form;
-    }
+	public function parametersAction() {
+		$service = $this->get('geomodel_service');
 
-    /**
-     * Displays a form to create a new GeoModel entity.
-     *
-     */
-    public function newAction() {
-        $entity = new GeoModel();
-        $form = $this->createCreateForm($entity);
+		$parameters = $service->getParameters($this->getRequest());
 
-        return $this->render('AEMRMarketResearchBundle:GeoModel:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
-        ));
-    }
+		return array('parameters' => $parameters);
+	}
 
-    /**
-     * Finds and displays a GeoModel entity.
-     *
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+	/**
+	 * Creates a new GeoModel entity.
+	 *
+	 */
+	public function newAction() {
+		$service = $this->get('geomodel_service');
+		return $service->newModel($this->getRequest()->query->get('id'));
+	}
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
+	/**
+	 * Creates a form to create a GeoModel entity.
+	 *
+	 * @param GeoModel $entity The entity
+	 *
+	 * @return \Symfony\Component\Form\Form The form
+	 */
+	private function createCreateForm(GeoModel $entity) {
+		$form = $this->createForm(new GeoModelType(), $entity, array(
+			'action' => $this->generateUrl('geomodel_create'),
+			'method' => 'POST',
+		));
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GeoModel entity.');
-        }
+		$form->add('submit', 'submit', array('label' => 'Create'));
 
-        $deleteForm = $this->createDeleteForm($id);
+		return $form;
+	}
 
-        return $this->render('AEMRMarketResearchBundle:GeoModel:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
+	/**
+	 * Finds and displays a GeoModel entity.
+	 *
+	 */
+	public function showAction($id) {
+		$em = $this->getDoctrine()->getManager();
 
-    /**
-     * Displays a form to edit an existing GeoModel entity.
-     *
-     */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getManager();
+		$entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find GeoModel entity.');
+		}
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GeoModel entity.');
-        }
+		$deleteForm = $this->createDeleteForm($id);
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+		return $this->render('AEMRMarketResearchBundle:GeoModel:show.html.twig', array(
+					'entity' => $entity,
+					'delete_form' => $deleteForm->createView(),
+		));
+	}
 
-        return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
+	/**
+	 * Displays a form to edit an existing GeoModel entity.
+	 *
+	 */
+	public function editAction($id) {
+		$em = $this->getDoctrine()->getManager();
 
-    /**
-     * Creates a form to edit a GeoModel entity.
-     *
-     * @param GeoModel $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(GeoModel $entity) {
-        $form = $this->createForm(new GeoModelType(), $entity, array(
-            'action' => $this->generateUrl('geomodel_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
+		$entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find GeoModel entity.');
+		}
 
-        return $form;
-    }
+		$editForm = $this->createEditForm($entity);
+		$deleteForm = $this->createDeleteForm($id);
 
-    /**
-     * Edits an existing GeoModel entity.
-     *
-     */
-    public function updateAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
+		return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
+					'entity' => $entity,
+					'edit_form' => $editForm->createView(),
+					'delete_form' => $deleteForm->createView(),
+		));
+	}
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
+	/**
+	 * Creates a form to edit a GeoModel entity.
+	 *
+	 * @param GeoModel $entity The entity
+	 *
+	 * @return \Symfony\Component\Form\Form The form
+	 */
+	private function createEditForm(GeoModel $entity) {
+		$form = $this->createForm(new GeoModelType(), $entity, array(
+			'action' => $this->generateUrl('geomodel_update', array('id' => $entity->getId())),
+			'method' => 'PUT',
+		));
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GeoModel entity.');
-        }
+		$form->add('submit', 'submit', array('label' => 'Update'));
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+		return $form;
+	}
 
-        if ($editForm->isValid()) {
-            $em->flush();
+	/**
+	 * Edits an existing GeoModel entity.
+	 *
+	 */
+	public function updateAction(Request $request, $id) {
+		$em = $this->getDoctrine()->getManager();
 
-            return $this->redirect($this->generateUrl('geomodel_edit', array('id' => $id)));
-        }
+		$entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
 
-        return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
-                    'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
-        ));
-    }
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find GeoModel entity.');
+		}
 
-    /**
-     * Deletes a GeoModel entity.
-     *
-     */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+		$deleteForm = $this->createDeleteForm($id);
+		$editForm = $this->createEditForm($entity);
+		$editForm->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
+		if ($editForm->isValid()) {
+			$em->flush();
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find GeoModel entity.');
-            }
+			return $this->redirect($this->generateUrl('geomodel_edit', array('id' => $id)));
+		}
 
-            $em->remove($entity);
-            $em->flush();
-        }
+		return $this->render('AEMRMarketResearchBundle:GeoModel:edit.html.twig', array(
+					'entity' => $entity,
+					'edit_form' => $editForm->createView(),
+					'delete_form' => $deleteForm->createView(),
+		));
+	}
 
-        return $this->redirect($this->generateUrl('geomodel'));
-    }
+	/**
+	 * Deletes a GeoModel entity.
+	 *
+	 */
+	public function deleteAction(Request $request, $id) {
+		$form = $this->createDeleteForm($id);
+		$form->handleRequest($request);
 
-    /**
-     * Creates a form to delete a GeoModel entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id) {
-        return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('geomodel_delete', array('id' => $id)))
-                        ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
-    }
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
+
+			if (!$entity) {
+				throw $this->createNotFoundException('Unable to find GeoModel entity.');
+			}
+
+			$em->remove($entity);
+			$em->flush();
+		}
+
+		return $this->redirect($this->generateUrl('geomodel'));
+	}
+
+	/**
+	 * Creates a form to delete a GeoModel entity by id.
+	 *
+	 * @param mixed $id The entity id
+	 *
+	 * @return \Symfony\Component\Form\Form The form
+	 */
+	private function createDeleteForm($id) {
+		return $this->createFormBuilder()
+						->setAction($this->generateUrl('geomodel_delete', array('id' => $id)))
+						->setMethod('DELETE')
+						->add('submit', 'submit', array('label' => 'Delete'))
+						->getForm()
+		;
+	}
 
 }

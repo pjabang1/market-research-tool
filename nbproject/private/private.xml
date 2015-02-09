@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Resources/config/routing.yml</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/app/config/routing_rest.yml</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/app/config/routing.yml</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Controller/GeographyController.php</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Controller/AEMRRestController.php</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Controller/GeoIndicatorController.php</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Repository/GeoIndicatorRepository.php</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Resources/config/routing/geoindicator.yml</file>
-            <file>file:/Library/WebServer/Documents/market-attractiveness/mrt-api/src/AEMR/Bundle/MarketResearchBundle/Service/GeoIndicatorService.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
