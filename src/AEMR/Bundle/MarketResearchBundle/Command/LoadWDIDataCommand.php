@@ -91,10 +91,12 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
         $return = array();
         foreach ($periods AS $period) {
             if (isset($data[$period])) {
-                $line = $row;
-                $line['date'] = $period;
-                $line['value'] = $data[$period];
-                $return[] = $line;
+                if (trim($data[$period]) !== '') {
+                    $line = $row;
+                    $line['date'] = $period;
+                    $line['value'] = $data[$period];
+                    $return[] = $line;
+               }
             }
         }
         return $return;
@@ -107,7 +109,7 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
 
-        $this->setInsertLimit(10);
+        $this->setInsertLimit(1000);
         $filePath = $input->getArgument('file');
         $parameter = $input->getArgument('parameter');
 
@@ -134,14 +136,22 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
                     if (isset($config['indicators']) && !in_array($data[$config['indicator_code_column']], $config['indicators'])) {
                         continue;
                     }
-
+                    
                     $row['geoindicator_id'] = (int) $this->getIndicatorIdByCode($data[$config['indicator_code_column']]);
                     $row['geography_id'] = (int) $this->getGeographyIdByCode3($data[$config['country_code_column']]);
 
-                    $data = array_merge($data, $row);
+                    // echo "data \n";
+                    // print_r($data);
+                    
+                    // $data = array_merge($data, $row);
 
                     $series = $this->createSeries($row, $data, $config['periods']);
-                    // print_r($series);
+                    // print_r($row);
+                    
+                    //echo "header \n";
+                    // print_r($header);
+                    //print_r($series);
+                    //continue;
                     if ($series) {
                         foreach ($series AS $insertRow) {
                             $rows++;
@@ -150,7 +160,7 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
                             );
                             $geoGroupSeries = $em->getRepository($geoGroupSeriesEntity)->findOneBy($conditions);
                             // print_r($insertRow);
-                            if($geoGroupSeries) {
+                            if ($geoGroupSeries) {
                                 $this->replace($table, $insertRow, $conditions);
                                 // echo "updateing \n";
                             } else {
@@ -159,7 +169,7 @@ class LoadWDIDataCommand extends ConnectionAwareCommand {
                             // $output->writeln("<info>saving ... </info>");
                             // $output->writeln($insertRow);
                             // print_r($data);
-                            
+
                             $this->replace($table, $insertRow);
                         }
                     }

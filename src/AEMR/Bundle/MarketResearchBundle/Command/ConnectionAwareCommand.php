@@ -96,11 +96,11 @@ abstract class ConnectionAwareCommand extends ContainerAwareCommand {
 
             try {
                 if ($conditions) {
-                    echo "updating \n";
+                    // echo "updating \n";
                     $conn->update($table, $line, $conditions);
                 } else {
                     $conn->insert($table, $line);
-                    echo "inserting \n";
+                    // echo "inserting \n";
                 }
                 $this->insertCounter++;
             } catch (\Exception $e) {

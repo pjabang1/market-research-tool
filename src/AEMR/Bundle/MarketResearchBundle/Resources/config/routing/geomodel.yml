@@ -10,6 +10,10 @@ geomodel_geographies:
 geomodel_indicators:
     path:     /indicators
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:indicators" }
+geomodel_replace:
+    path:     /replace
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:replace" }
+    requirements: { _method: post|put }
 geomodel_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:show" }

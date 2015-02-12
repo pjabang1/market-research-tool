@@ -7,9 +7,9 @@
         </id>
         <field name="geomodelparameter_id" type="bigint" column="geomodelparameter_id" />
         <field name="geoindicator_id" type="bigint" column="geoindicator_id" />
-        <field name="weight" type="decimal" column="weight" precision="24" scale="6" />
-        <field name="relevance_sort" type="string" column="relevance_sort" length="10" />
-        <field name="aggregation_type" type="string" column="aggregation_type" length="20" />
+        <field name="weight" nullable="true" type="decimal" column="weight" precision="24" scale="6" />
+        <field name="relevance_sort" nullable="true" type="string" column="relevance_sort" length="10" />
+        <field name="aggregation_type" nullable="true" type="string" column="aggregation_type" length="20" />
         <indexes>
         </indexes>
         <unique-constraints>

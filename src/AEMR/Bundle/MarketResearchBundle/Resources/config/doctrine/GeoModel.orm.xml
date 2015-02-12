@@ -6,9 +6,9 @@
 	    <generator strategy="IDENTITY"/>
 	</id>
 	<field name="name" type="string" column="name" length="255" />
-        <field name="algorithm_code" type="string" column="algorithm_code" length="20" />
-	<field name="description" type="string" column="description" length="255" />
-        <field name="geogroup_id" type="bigint" column="geogroup_id" />
+        <field name="algorithm_code" type="string" nullable="true" column="algorithm_code" length="20" />
+	<field name="description" type="string" nullable="true" column="description" length="255" />
+        <field name="geogroup_id" type="bigint" nullable="true" column="geogroup_id" />
 	<indexes>
 	    <index name="name" columns="name" />
             <index name="geogroup_id" columns="geogroup_id" />
