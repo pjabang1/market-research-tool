@@ -42,7 +42,8 @@ class GeoIndicatorController extends AEMRRestController {
     public function valuesAction() {
         $service = $this->get('geoindicator_service');
         $values = $service->getValues($this->getRequest());
-        return array('values' => $values);
+
+        return array($values);
     }
 
     /**
