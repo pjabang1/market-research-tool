@@ -1,7 +1,12 @@
 geoindicator:
     path:     /
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:index" }
-
+geoindicator_total:
+    path:     /total/
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:total" }
+geoindicator_values:
+    path:     /values
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:values" }
 geoindicator_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:show" }

@@ -26,6 +26,26 @@ class GeoIndicatorController extends AEMRRestController {
     }
 
     /**
+     * Lists all GeoIndicator entities with total.
+     *
+     */
+    public function totalAction() {
+        $service = $this->get('geoindicator_service');
+        $entities = $service->getIndicatorsWithTotals($this->getRequest());
+        return array('geoindicators' => $entities);
+    }
+
+    /**
+     * Lists all GeoIndicator values
+     *
+     */
+    public function valuesAction() {
+        $service = $this->get('geoindicator_service');
+        $values = $service->getValues($this->getRequest());
+        return array('values' => $values);
+    }
+
+    /**
      * Creates a new GeoIndicator entity.
      *
      */

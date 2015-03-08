@@ -38,4 +38,43 @@ class GeoIndicatorService extends AEMRService {
           return $entities;* */
     }
 
+    /**
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getIndicatorsWithTotals() {
+        $sql = "SELECT
+        gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, COUNT(gis.id) AS indicator_count, COUNT( DISTINCT (
+        gis.geography_id
+        ) ) AS geography_count
+        FROM base_geoindicators gi
+        LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id
+        GROUP BY gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method";
+
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute();
+        //I used FETCH_COLUMN because I only needed one Column.
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $request
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getValues($request) {
+        $params = array(
+            'id' => $request->query->get('id'),
+            'date' => $request->query->get('date'),
+        );
+
+            $sql = "SELECT gis.id, gis.geoindicator_id, gis.geography_id, gis.value, gis.date, g.name, g.code, g.code_3
+                FROM  `base_geoindicatorseries` gis
+                LEFT JOIN base_geographies g ON g.id = gis.geography_id
+                WHERE gis.geoindicator_id = :id AND gis.date = :date";
+
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
