@@ -49,13 +49,39 @@ class GeoIndicatorService extends AEMRService
         $sql = "SELECT
         gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, COUNT(gis.id) AS indicator_count, COUNT( DISTINCT (
         gis.geography_id
-        ) ) AS geography_count
+        ) ) AS geography_count, COUNT(DISTINCT(gis.date)) AS dates
         FROM base_geoindicators gi
         LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id
         GROUP BY gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method";
 
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute();
+        //I used FETCH_COLUMN because I only needed one Column.
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getIndicatorsWithAverages($request)
+    {
+        $params = array(
+            'id' => $request->query->get('id') 
+        );
+
+        $sql = "SELECT
+        gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, gis.date, COUNT(gis.id) AS indicator_count, COUNT( DISTINCT (
+        gis.geography_id
+        )) AS geography_count, max(gis.value) AS max, min(gis.value) AS min, IF((gis.value is NULL), 0, SUM(gis.value)) AS sum, IF((gis.value is NULL), 0, SUM(gis.value)/COUNT(gis.value)) AS  average
+        FROM base_geoindicators gi 
+        LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id 
+        WHERE gi.id = :id 
+        GROUP BY gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, gis.date";
+
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute($params);
         //I used FETCH_COLUMN because I only needed one Column.
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -78,6 +104,7 @@ class GeoIndicatorService extends AEMRService
         if (!$params['date'] && $return['dates']) {
             $params['date'] = $return['dates'][0]['date'];
         }
+
 
         $sql = "SELECT gis.id, gis.geoindicator_id, gis.geography_id, gis.value, gis.date, g.name, g.code, g.code_3
                 FROM  `base_geoindicatorseries` gis

@@ -35,6 +35,16 @@ class GeoIndicatorController extends AEMRRestController {
         return array('geoindicators' => $entities);
     }
 
+        /**
+     * Lists all GeoIndicator entities with average.
+     *
+     */
+    public function averageAction() {
+        $service = $this->get('geoindicator_service');
+        $entities = $service->getIndicatorsWithAverages($this->getRequest());
+        return array('geoindicators' => $entities);
+    }
+
     /**
      * Lists all GeoIndicator values
      *

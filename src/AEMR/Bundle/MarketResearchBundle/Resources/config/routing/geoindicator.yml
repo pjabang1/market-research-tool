@@ -4,6 +4,9 @@ geoindicator:
 geoindicator_total:
     path:     /total/
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:total" }
+geoindicator_average:
+    path:     /average/
+    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:average" }
 geoindicator_values:
     path:     /values
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:values" }
