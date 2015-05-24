@@ -7,15 +7,9 @@ geoindicator_total:
 geoindicator_average:
     path:     /average/
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:average" }
-geoindicator_geography_average:
-    path:     /geography/average/
-    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:geographyAverage" }
 geoindicator_values:
     path:     /values
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:values" }
-geoindicator_summarise:
-    path:     /summarise
-    defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:summarise" }
 geoindicator_show:
     path:     /{id}/show
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:show" }
@@ -34,7 +28,7 @@ geoindicator_edit:
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:edit" }
 
 geoindicator_update:
-    path:     /update
+    path:     /{id}/update
     defaults: { _controller: "AEMRMarketResearchBundle:GeoIndicator:update" }
     requirements: { _method: post|put }
 

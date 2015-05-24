@@ -15,10 +15,12 @@
         <field name="source" type="string" column="source" length="50" />
         <field name="aggregation_method" type="string" column="aggregation_method" length="20" />
 	<field name="description" type="string" column="description" length="255" />
+	<field name="content" type="text" nullable="true" column="content" />
+	<field name="summary" type="text" nullable="true" column="summary" />
 	<indexes>
 	    <index name="code" columns="code" />
 	    <index name="geo_type" columns="geo_type" />
-            <index name="status" columns="status" />
+        <index name="status" columns="status" />
 	</indexes>
 	<unique-constraints>
 	</unique-constraints>

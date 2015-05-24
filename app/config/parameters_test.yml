@@ -5,7 +5,7 @@ parameters:
     database_port: null
     database_name: mrt_test
     database_user: root
-    database_password: Camron1703
+    database_password: camron1
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null

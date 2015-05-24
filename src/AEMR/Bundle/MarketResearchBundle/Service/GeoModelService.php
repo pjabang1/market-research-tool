@@ -72,6 +72,9 @@ class GeoModelService extends AEMRService {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+
+
+
     /**
      * 
      * @param type $request

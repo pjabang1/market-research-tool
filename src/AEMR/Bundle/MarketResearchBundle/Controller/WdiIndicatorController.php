@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Util\Codes;
 use AEMR\Bundle\MarketResearchBundle\Entity\GeoIndicator;
 use AEMR\Bundle\MarketResearchBundle\Form\GeoIndicatorType;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * GeoIndicator controller.
@@ -37,32 +35,14 @@ class GeoIndicatorController extends AEMRRestController {
         return array('geoindicators' => $entities);
     }
 
-    public function summariseAction() {
-        $service = $this->get('geoindicator_service');
-        // $entities = $service->summarise($this->getRequest()->query->get('id'));
-        $entities = $service->unserializeContent($this->getRequest()->query->get('id'));
-
-        return $entities;
-    }
-
-    /**
-     * Lists all Geography GeoIndicator entities with average.
+        /**
+     * Lists all GeoIndicator entities with average.
      *
      */
     public function averageAction() {
         $service = $this->get('geoindicator_service');
-        $result = $service->getIndicatorsWithAverages($this->getRequest());
-        return $result;
-    }
-
-       /**
-     * Lists all GeoIndicator entities with average.
-     *
-     */
-    public function geographyAverageAction() {
-        $service = $this->get('geoindicator_service');
-        $result = $service->getGeographyIndicatorsWithAverages($this->getRequest());
-        return $result;
+        $entities = $service->getIndicatorsWithAverages($this->getRequest());
+        return array('geoindicators' => $entities);
     }
 
     /**
@@ -81,11 +61,20 @@ class GeoIndicatorController extends AEMRRestController {
      *
      */
     public function createAction(Request $request) {
-        $service = $this->get('geoindicator_service');
-        $data = $this->getRequest()->request->all();
+        $entity = new GeoIndicator();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
 
-        $response = $service->insert($data);
-        return $response;
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->view($entity, Codes::HTTP_CREATED);
+        } else {
+            return $this->getFormErrors($entity, $form);
+        }
     }
 
     /**
@@ -93,32 +82,43 @@ class GeoIndicatorController extends AEMRRestController {
      *
      */
     public function showAction($id) {
-         $service = $this->get('geoindicator_service');
-         $data = $service->get($id);
-         //echo json_encode($data, true);
-         //exit;
+        $em = $this->getDoctrine()->getManager();
 
-         //$response = new JsonResponse();
-         //$response->setData($data);
-         // return (array) $response;
+        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoIndicator')->find($id);
 
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find GeoIndicator entity.');
+        }
 
-        $response->setContent(json_encode($data));
-        return $response;
+
+        return array(
+            'entity' => $entity
+        );
     }
 
     /**
      * Edits an existing GeoIndicator entity.
      *
      */
-    public function updateAction() {
-        $service = $this->get('geoindicator_service');
-        $data = $this->getRequest()->request->all();
+    public function updateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
 
-        $response = $service->update($data);
-        return $response;
+        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoIndicator')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find GeoIndicator entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->view($entity);
+        }
+
+        return $this->getFormErrors($entity, $editForm);
 
     }
 

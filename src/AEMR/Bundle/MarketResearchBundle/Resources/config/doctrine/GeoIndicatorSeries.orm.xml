@@ -7,10 +7,13 @@
         </id>
         <field name="geoindicator_id" type="bigint" column="geoindicator_id" />
         <field name="geography_id" type="bigint" column="geography_id" />
+        <field name="prev_id" type="bigint" column="prev_id" />
         <field name="value" type="decimal" column="value" precision="24" scale="6" />
         <field name="date" type="string" column="date" length="30" />
+        <field name="summary" type="string" nullable="true" column="summary" length="255" />
         <indexes>
             <index name="geoindicator_geography" columns="geoindicator_id,geography_id" />
+            <index name="prev_id" columns="prev_id" />
         </indexes>
         <unique-constraints>
             <unique-constraint columns="geoindicator_id,geography_id,date" name="geoindicator_geography_date" />
