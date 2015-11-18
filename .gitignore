@@ -10,7 +10,7 @@
 /vendor/
 /bin/
 /composer.phar
-
+.vagrant
 *.iml
 
 ## Directory-based project format:
