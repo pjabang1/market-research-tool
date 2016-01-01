@@ -13,7 +13,7 @@ class GeoIndicatorGroupService extends EntityGroupService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -22,12 +22,30 @@ class GeoIndicatorGroupService extends EntityGroupService {
         $params = array(
             'id' => $request->query->get('id')
         );
-        
+
         return $this->_getEntities($params);
     }
-    
+
+    public function getSummary($request) {
+
+        $params = array(
+            'id' => $request->query->get('id')
+        );
+
+        return $this->_getEntities($params);
+    }
+
+    public function getGeographyIndicators($request) {
+
+        $params = array(
+            'id' => $request->query->get('id')
+        );
+
+        return $this->_getEntities($params);
+    }
+
     /**
-     * 
+     *
      * @param type $request
      */
     public function replace($request) {
@@ -36,12 +54,12 @@ class GeoIndicatorGroupService extends EntityGroupService {
         $params['entities'] = $request->request->get('indicators');
         $params['name'] = $request->request->get('name');
         $params['description'] = $request->request->get('description');
-        
+
         return $this->_replace($params);
     }
 
 
 
-  
+
 
 }

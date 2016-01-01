@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping>
+	<entity name="AEMR\Bundle\MarketResearchBundle\Entity\Dataset" table="base_datasets" repository-class="AEMR\Bundle\MarketResearchBundle\Repository\DatasetRepository">
+		<change-tracking-policy>DEFERRED_IMPLICIT</change-tracking-policy>
+		<id name="id" type="bigint" column="id">
+			<generator strategy="IDENTITY"/>
+		</id>
+		<field name="name" type="string" column="name" length="255" />
+		<field name="content" type="text" nullable="true" column="content" />
+		<indexes>
+			<index name="name" columns="name" />
+		</indexes>
+		<unique-constraints>
+		</unique-constraints>
+		<lifecycle-callbacks/>
+	</entity>
+</doctrine-mapping>

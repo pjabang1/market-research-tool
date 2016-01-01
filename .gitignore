@@ -12,7 +12,7 @@
 /composer.phar
 .vagrant
 *.iml
-
+/local/
 ## Directory-based project format:
 .idea/
 

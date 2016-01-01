@@ -35,14 +35,30 @@ class GeoIndicatorGroupController extends Controller {
         return $return;
     }
 
+    public function indicatorSummaryAction() {
+        $service = $this->get('geoindicatorgroup_service');
+        $return = array();
+        $return['group'] = $service->get($this->getRequest()->query->get('id'));
+        $return['indicators'] = $service->getSummary($this->getRequest());
+        return $return;
+    }
+
+    public function geographyIndicatorsAction() {
+        $service = $this->get('geoindicatorgroup_service');
+        $return = array();
+        $return['group'] = $service->get($this->getRequest()->query->get('id'));
+        $return['indicators'] = $service->getGeographyIndicators($this->getRequest());
+        return $return;
+    }
+
     /**
      * Lists all GeoIndicatorGroup entities.
      *
      */
     public function indicatorsReplaceAction() {
-        
+
         // return $this->getRequest()->request->all();
-        
+
         $service = $this->get('geoindicatorgroup_service');
 
         try {
@@ -53,5 +69,5 @@ class GeoIndicatorGroupController extends Controller {
         }
     }
 
-  
+
 }

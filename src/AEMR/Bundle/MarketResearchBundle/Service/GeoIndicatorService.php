@@ -74,7 +74,7 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     {
         $return = array();
         $return['indicator'] = $this->getIndicator($request->query->get('id'));
-        $return['dates'] = $this->getDates($request->query->get('id'));
+        $return['dates'] = $this->getDates($request->query->get('id'), $request->query->get('from'), $request->query->get('to'));
 
 
         $params = array(
@@ -83,6 +83,7 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
             'geogroup' => $request->query->get('geogroup'),
             'from' => $request->query->get('from'),
             'to' => $request->query->get('to'),
+            'geography_ids' => $request->query->get('geography_ids'),
             );
 
 
@@ -96,7 +97,7 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $conditions['from'] = $params['from'] ? $params['from'] : $params['_from'];
         $conditions['to'] = $params['to'] ? $params['to'] : $params['_to'];
 
-        $sql = "SELECT gis.id, gis.geoindicator_id, gis.geography_id, gis.value, gis.date, g.name, g.code, g.code_3
+        $sql = "SELECT gis.value, gis.date, g.code
         FROM  `base_geoindicatorseries` gis
         LEFT JOIN base_geographies g ON g.id = gis.geography_id ";
 
@@ -111,10 +112,18 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
             $sql = $sql . " AND ggg.geogroup_id = :geogroup";
         }
 
+        if($params['geography_ids']) {
+            $geography_ids = "(" . join(',',$params['geography_ids']) . ")";
+            $sql = $sql . " AND gis.geography_id IN $geography_ids";
+        }
+
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute($conditions);
+        $return["from"] = $params['_from'];
+        $return["to"] = $params['_to'];
         $return['values'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $return['total_geographies'] = $this->getTotalGeographies($conditions);
+        $return['geographies'] = $this->getCountries($params);
+        $return['total_geographies'] = count($return['geographies']);
         return $return;
     }
 
@@ -134,7 +143,7 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
             'to' => $request->query->get('to'),
             );
 
-        $return['dates'] = $this->getDates($request->query->get('id'));
+        $return['dates'] = $this->getDates($request->query->get('id'), $request->query->get('from'), $request->query->get('to'));
 
         $last = count($return['dates'])-1;
         $params['_to'] = $return['dates'] ? $return['dates'][0]['date'] : '';
@@ -150,7 +159,7 @@ return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, gis.date, COUNT(gis.id) AS indicator_count, COUNT( DISTINCT (
             gis.geography_id
             )) AS geography_count, max(gis.value) AS max, min(gis.value) AS min, IF((gis.value is NULL), 0, SUM(gis.value)) AS sum, IF((gis.value is NULL), 0, SUM(gis.value)/COUNT(gis.value)) AS  average
-    FROM base_geoindicators gi 
+    FROM base_geoindicators gi
     LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id ";
 if($params['geogroup']) {
         $conditions['geogroup'] = $params['geogroup'];
@@ -197,7 +206,7 @@ if($params['geogroup']) {
             'to' => $request->query->get('to'),
             );
 
-        $return['dates'] = $this->getDates($request->query->get('id'));
+        $return['dates'] = $this->getDates($request->query->get('id'), $request->query->get('from'), $request->query->get('to'));
 
         $last = count($return['dates'])-1;
         $params['_to'] = $return['dates'] ? $return['dates'][0]['date'] : '';
@@ -213,8 +222,8 @@ if($params['geogroup']) {
         gi.id, gi.code, gi.name, gi.periodicity, gi.aggregation_method, g.name, g.code, g.code_3, COUNT(gis.id) AS indicator_count, COUNT( DISTINCT (
             gis.geography_id
             )) AS geography_count, max(gis.value) AS max, min(gis.value) AS min, IF((gis.value is NULL), 0, SUM(gis.value)) AS sum, IF((gis.value is NULL), 0, SUM(gis.value)/COUNT(gis.value)) AS  average
-    FROM base_geoindicators gi 
-    LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id 
+    FROM base_geoindicators gi
+    LEFT JOIN base_geoindicatorseries gis ON gi.id = gis.geoindicator_id
     LEFT JOIN base_geographies g ON g.id = gis.geography_id ";
 if($params['geogroup']) {
         $conditions['geogroup'] = $params['geogroup'];
@@ -249,7 +258,7 @@ if($params['geogroup']) {
     **/
     public function getSummarisedValues($indicator) {
         $sql = "SELECT * FROM base_geoindicatorseries gis WHERE gis.geoindicator_id = :id ORDER BY geography_id, `date` ASC";
-        
+
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute(array('id' => $indicator));
         $values = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -258,7 +267,7 @@ if($params['geogroup']) {
         $return = array();
         $summaries = array();
 
-        
+
         // $highest_rise = 0;
         // $highest_fall = 0;
 
@@ -312,7 +321,7 @@ if($params['geogroup']) {
                 $return['summarised'] = true;
             } catch(Exception $e) {
                 $conn->rollback();
-                
+
                 // $return['summarised'] = true;
                 throw $e;
             }
@@ -395,7 +404,7 @@ if($params['geogroup']) {
         $keys['dates'] = $dates;
 
         return $keys;
-        
+
     }
 
 
@@ -429,7 +438,7 @@ if($params['geogroup']) {
                 $key = $line['geography_id'] . '#' . $id . '#' . $line['date'];
                 $return[$key] = $line;
             }
-                
+
             }
         }
 
@@ -470,7 +479,7 @@ if($params['geogroup']) {
                 $return['replaced'] = true;
             } catch(Exception $e) {
                 $conn->rollback();
-                
+
                 // $return['summarised'] = true;
                 throw $e;
             }
@@ -522,7 +531,7 @@ if($params['geogroup']) {
                     $value['min_value'] = $value['value'];
                     $value['max_date'] = $value['date'];
                     $value['min_date'] = $value['date'];
-                    $value['count'] = 1; 
+                    $value['count'] = 1;
                     $value['sum'] = $value['value'];
                     $return[$key] = $value;
                 } else {
@@ -533,7 +542,19 @@ if($params['geogroup']) {
         }
     }
 
-  
+    public function getCountries($params) {
+        $sql = "SELECT * FROM base_geographies";
+        if($params['geography_ids']) {
+            $geography_ids = "(" . join(',',$params['geography_ids']) . ")";
+            $sql = $sql . " WHERE id IN $geography_ids";
+        }
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute();
+        $return = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $return;
+
+    }
+
 
     public function getTotalGeographies($params) {
         $conditions = array();
@@ -555,15 +576,33 @@ if($params['geogroup']) {
      * @return array
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getDates($id)
+
+
+    public function getDates($id, $from, $to) {
+      $fromToDates = $this->getFromToDates($id);
+      $fromToDates["from"] = $fromToDates["to"]-5;
+      $from = !$from ? $fromToDates["from"] : $from;
+      $to = !$to ? $fromToDates["to"] : $to;
+      return $this->createDateSeries($from, $to);
+    }
+
+    public function getFromToDates($id)
     {
-        $sql = "SELECT distinct(date)  AS date
+        $sql = "SELECT max(date) AS `to`, min(date) AS `from`
         FROM `base_geoindicatorseries`
-        WHERE `geoindicator_id` = :id
+        WHERE `geoindicator_id` = :id AND `value` != 0
         ORDER BY date DESC";
-        $stmt = $this->getConnection()->prepare($sql);
-        $stmt->execute(array('id' => $id));
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->getConnection()->fetchAssoc($sql, array('id' => $id));
+    }
+
+
+    public function createDateSeries($from, $to) {
+      $dates = array();
+      for($i = $to; $i >= $from; $i--) {
+        $date = (string) $i;
+        $dates[] = array("date" => $date);
+      }
+      return $dates;
     }
 
 

@@ -12,12 +12,16 @@ services:
       geoindicatorgroup_service:
         class:     AEMR\Bundle\MarketResearchBundle\Service\GeoIndicatorGroupService
         calls:
-            - [setEntityManager, ["@doctrine.orm.entity_manager"]]      
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
       geoindicator_service:
         class:     AEMR\Bundle\MarketResearchBundle\Service\GeoIndicatorService
         calls:
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
       geomodel_service:
         class:     AEMR\Bundle\MarketResearchBundle\Service\GeoModelService
+        calls:
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+      dataset_service:
+        class:     AEMR\Bundle\MarketResearchBundle\Service\DatasetService
         calls:
             - [setEntityManager, ["@doctrine.orm.entity_manager"]]
