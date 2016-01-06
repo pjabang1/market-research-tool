@@ -15,7 +15,7 @@ geomodel_replace:
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:replace" }
     requirements: { _method: post|put }
 geomodel_show:
-    path:     /{id}/show
+    path:     /{id}
     defaults: { _controller: "AEMRMarketResearchBundle:GeoModel:show" }
 
 geomodel_new:

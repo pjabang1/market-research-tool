@@ -7,13 +7,13 @@ use AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameter;
 use AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameterIndicator;
 
 class GeoModelReplaceHydrator {
-    
+
     protected $service;
 
     protected $data;
 
     // $conn->lastInsertId();
-    
+
     public function getData() {
         return $this->data;
     }
@@ -21,7 +21,7 @@ class GeoModelReplaceHydrator {
     public function setData($data) {
         $this->data = $data;
     }
-    
+
     public function getService() {
         return $this->service;
     }
@@ -30,38 +30,45 @@ class GeoModelReplaceHydrator {
         $this->service = $service;
     }
 
-    
+
     /**
-     * 
+     *
      * @param array $request
      */
     public function hydrate($request) {
-        
+
         return $this->hydrateModel($request->request->all());
     }
-    
+
     /**
-     * 
+     *
      * @param \AEMR\Bundle\MarketResearchBundle\Entity\GeoModel $model
      */
     public function hydrateModel($model) {
         $entity = array();
         // $this->getService()->newModel($this->getRequest()->query->get('id'));
-        if(isset($model['id']) && $model) {
+        if(isset($model['id']) && $model['id']) {
             $entity['id'] = $model['id'];
         }
-        $entity['algorithm_code'] = $model['algorithm_code'];
-        $entity['name'] = $model['name'];
-        $entity['description'] = $model['description'];
-        
-        $return['model'] = $entity;
-        $return['parameters'] = $this->hydrateParameters($model['parameters']);
-        
-        return $return;
+        $entity['algorithm_code'] = $this->getValue($model, 'algorithm_code', '');
+        $entity['name'] = $this->getValue($model, 'name', '');
+        $entity['geogroup_id'] = $this->getValue($model, 'geogroup_id', 0);
+        $entity['description'] = $this->getValue($model, 'description', '');
+        $entity['content'] = $this->getValue($model, 'content', '');
+
+        // $return['model'] = $entity;
+        // $return['parameters'] = $this->hydrateParameters($model['parameters']);
+
+        return $entity;
     }
- 
+
+    public function getValue($arr, $key, $default) {
+      return isset($arr[$key]) ? $arr[$key] : $default;
+    }
+
+
     /**
-     * 
+     *
      * @param arrat $indicators
      */
     public function hydrateIndicators($indicators) {
@@ -73,9 +80,9 @@ class GeoModelReplaceHydrator {
         }
         return $return;
     }
-    
+
     /**
-     * 
+     *
      * @param type $indicators
      */
     public function hydrateIndicator($indicator) {
@@ -85,7 +92,7 @@ class GeoModelReplaceHydrator {
     }
 
     /**
-     * 
+     *
      * @param \AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameter $parameter
      * @return \AEMR\Bundle\MarketResearchBundle\Entity\GeoModelParameter
      */

@@ -18,7 +18,7 @@ class GeoModelController extends Controller {
     /**
      * Lists all GeoModel entities.
      *
-     * 
+     *
      */
     public function indexAction() {
         $service = $this->get('geomodel_service');
@@ -27,7 +27,7 @@ class GeoModelController extends Controller {
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function valuesAction() {
@@ -120,20 +120,9 @@ class GeoModelController extends Controller {
      *
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getManager();
+      $service = $this->get('geomodel_service');
+      return $service->getModel($id);
 
-        $entity = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find GeoModel entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('AEMRMarketResearchBundle:GeoModel:show.html.twig', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
-        ));
     }
 
     /**

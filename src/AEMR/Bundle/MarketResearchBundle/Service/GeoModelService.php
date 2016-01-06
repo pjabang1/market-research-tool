@@ -7,7 +7,7 @@ use AEMR\Bundle\MarketResearchBundle\Service\AEMRService;
 class GeoModelService extends AEMRService {
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -20,7 +20,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -33,15 +33,15 @@ class GeoModelService extends AEMRService {
 
         // return $request->request->all();
         $sql = "SELECT g.id AS geography_id, gi.id AS geoindicator_id, gmpi.weight,gmp.id AS parameter_id,  gis.value AS value
-                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg 
-                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id` 
+                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg
+                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id`
                 LEFT JOIN base_geographies g ON g.id = ggg.entity_id
                 LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
                 LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id
                 LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id
                 LEFT JOIN base_geoindicatorseries gis ON gis.geoindicator_id = gi.id
                 AND gis.geography_id = g.id
-                WHERE gg.id = :geogroup_id AND gm.id = :id AND gis.date = :date AND gg.entity = 'geography' 
+                WHERE gg.id = :geogroup_id AND gm.id = :id AND gis.date = :date AND gg.entity = 'geography'
                 ORDER BY  `g`.`name` ASC";
 
         $stmt = $this->getConnection()->prepare($sql);
@@ -51,7 +51,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -61,10 +61,10 @@ class GeoModelService extends AEMRService {
             'geogroup_id' => $request->query->get('geogroup_id'),
         );
         $sql = "SELECT g.*
-                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg 
-                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id` 
-                LEFT JOIN base_geographies g ON g.id = ggg.entity_id 
-                WHERE gg.id = :geogroup_id AND gm.id = :id AND gg.entity = 'geography' 
+                FROM  `base_geomodels` gm CROSS JOIN base_entitygroups gg
+                LEFT JOIN base_entitygroupentities ggg ON ggg.entitygroup_id = gg.`id`
+                LEFT JOIN base_geographies g ON g.id = ggg.entity_id
+                WHERE gg.id = :geogroup_id AND gm.id = :id AND gg.entity = 'geography'
                 ORDER BY  `g`.`name` ASC";
         $stmt = $this->getConnection()->prepare($sql);
         $stmt->execute($params);
@@ -76,7 +76,7 @@ class GeoModelService extends AEMRService {
 
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -85,7 +85,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -96,7 +96,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -105,7 +105,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $request
      * @return type
      */
@@ -113,12 +113,12 @@ class GeoModelService extends AEMRService {
         $params = array(
             'id' => $id
         );
-        $sql = "SELECT gmp.id AS parameter_id, gmp.name AS parameter_name, gmpi.geoindicator_id, gmpi.weight, gi.*, gmpi.relevance_sort 
+        $sql = "SELECT gmp.id AS parameter_id, gmp.name AS parameter_name, gmpi.geoindicator_id, gmpi.weight, gi.*, gmpi.relevance_sort
                 FROM  `base_geomodels` gm
                 LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
                 LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id
-                LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id 
-                WHERE gm.id = :id 
+                LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id
+                WHERE gm.id = :id
                 ORDER BY  `gi`.`name` ASC";
 
         $stmt = $this->getConnection()->prepare($sql);
@@ -131,7 +131,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return type
      */
@@ -153,7 +153,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param int $id
      * @return array
      */
@@ -176,7 +176,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param string $type
      * @return array
      */
@@ -202,7 +202,7 @@ class GeoModelService extends AEMRService {
     }
 
     /**
-     * 
+     *
      * @param int $id
      * @return array
      */
@@ -219,16 +219,25 @@ class GeoModelService extends AEMRService {
 
     public function replace($data) {
 
-        if (isset($data['model']['id']) && $data['model']['id']) {
+        if (isset($data['id']) && $data['id']) {
             return $this->update($data);
         } else {
             return $this->insert($data);
         }
 
-        // 
+    }
+
+    public function update($data) {
+      $this->getConnection()->update('base_geomodels', $data, array('id' => $data['id']));
+      return $data['id'];
     }
 
     public function insert($data) {
+      $this->getConnection()->insert('base_geomodels', $data);
+      return $this->getConnection()->lastInsertId();
+    }
+
+    public function __insert($data) {
         $this->getConnection()->beginTransaction();
         try {
             $this->getConnection()->insert('base_geomodels', $data['model']);
@@ -239,13 +248,13 @@ class GeoModelService extends AEMRService {
                     $parameter['geomodel_id'] = $model_id;
 
                     $indicators = isset($value['indicators']) ? $value['indicators'] : array();
-                   
-                    
+
+
                     if(isset($parameter['id'])) {
                         unset($parameter['id']);
                     }
-                    
-                  
+
+
                     $this->getConnection()->insert('base_geomodelparameters', $parameter);
                     $parameter_id = $this->getConnection()->lastInsertId();
                     if($indicators) {
@@ -254,7 +263,7 @@ class GeoModelService extends AEMRService {
                              $this->getConnection()->insert('base_geomodelparameterindicators', $indicator);
                         }
                     }
-                    
+
                 }
             }
             $try = $this->getConnection()->commit();
@@ -263,11 +272,7 @@ class GeoModelService extends AEMRService {
             $try = $this->getConnection()->rollback();
             throw $e;
         }
-        
-    }
 
-    public function update($data) {
-        
     }
 
 }
