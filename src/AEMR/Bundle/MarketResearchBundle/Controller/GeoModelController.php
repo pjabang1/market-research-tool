@@ -94,7 +94,7 @@ class GeoModelController extends Controller {
         $hydrator = new \AEMR\Bundle\MarketResearchBundle\Hydrator\GeoModelReplaceHydrator();
         $data = $hydrator->hydrate($this->getRequest());
         $service = $this->get('geomodel_service');
-        return $service->replace($data);
+        return array("id" => $service->replace($data));
     }
 
     /**

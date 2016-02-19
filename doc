@@ -2,8 +2,8 @@ php app/console doctrine:generate:entities AEMRMarketResearchBundle
 php app/console doctrine:schema:update --force
 
 php app/load load:csv app/data/geographies.csv "AEMRMarketResearchBundle:Geography" code
-php app/load load:csv app/data/WDI_Indicators.csv "AEMRMarketResearchBundle:GeoIndicator" code
-php app/load load:wdidata /home/essa/data/essa/WDI_Data.csv "wdi.import"
+php app/load load:csv WDI_Indicators.csv "AEMRMarketResearchBundle:GeoIndicator" code
+php app/load load:wdidata /var/www/market-attractiveness/mrt-data/20160219/WDI_Data.csv "wdi.import"
 php app/load load:geogroup app/data/europe
 
 SELECT g.code, g.name, gi.id, gi.name, gis.value, gis.date
@@ -29,7 +29,7 @@ http://www.chartblocks.com/en/
 
 SELECT gm.name, gm.`algorithm_code` ,g.code AS code, g.id AS gid, g.name AS Geography, gi.name AS Indicator, gmpi.weight, gmp.name AS parameter, gis.value AS value, gis.date
 FROM  `base_geomodels` gm
-LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gm.`geogroup_id` 
+LEFT JOIN base_geogroupgeographies ggg ON ggg.geogroup_id = gm.`geogroup_id`
 LEFT JOIN base_geographies g ON g.id = ggg.geography_id
 LEFT JOIN base_geomodelparameters gmp ON gmp.geomodel_id = gm.id
 LEFT JOIN base_geomodelparameterindicators gmpi ON gmpi.geomodelparameter_id = gmp.id
@@ -37,11 +37,11 @@ LEFT JOIN base_geoindicators gi ON gi.id = gmpi.geoindicator_id
 LEFT JOIN base_geoindicatorseries gis ON gis.geoindicator_id = gi.id
 AND gis.geography_id = g.id
 WHERE gm.id =1 AND gis.date = 2013 AND gmp.name = 'x'
-ORDER BY  `g`.`name` ASC 
+ORDER BY  `g`.`name` ASC
 
 
 
-Pie Chart 
+Pie Chart
 
 http://stackoverflow.com/questions/21769872/d3-js-pie-chart-with-angled-horizontal-labels
 http://jsfiddle.net/Qh9X5/1196/
@@ -56,11 +56,11 @@ Good Rest Tutorial
 
 http://obtao.com/blog/2013/05/create-rest-api-in-a-symfony-application/
 
-Country Groups 
+Country Groups
 
 http://www.imf.org/external/pubs/ft/weo/2014/02/weodata/weoselagr.aspx
 
-Datasources 
+Datasources
 
 http://web.undp.org/psd-toolkit/1c_tools8a.html
 
@@ -75,7 +75,7 @@ https://www.conference-board.org/data/consumerconfidence.cfm
 http://people.stern.nyu.edu/jmei/super/data.html
 
 
-Economic Indicators 
+Economic Indicators
 
 http://www.economist.com/indicators
 http://www.economist.com/blogs/graphicdetail/2014/10/daily-chart-3
@@ -83,5 +83,3 @@ http://www.economist.com/blogs/graphicdetail/2014/10/daily-chart-3
 https://www.economy.com/freelunch/
 http://www.economist.com/content/big-mac-index
 http://www.oecd.org/std/oecdmaineconomicindicatorsmei.htm
-
-
