@@ -12,11 +12,14 @@ class GeoModelService extends AEMRService {
      * @return type
      */
     public function retrieve($request) {
-        $em = $this->getEntityManager();
-
-        $entities = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->findAll();
-
-        return $entities;
+      //  $em = $this->getEntityManager();
+        // $entities = $em->getRepository('AEMRMarketResearchBundle:GeoModel')->findAll();
+        // return $entities;
+        $sql = "SELECT id, name, algorithm_code, geogroup_id, description FROM `base_geomodels`";
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->execute($params);
+        //I used FETCH_COLUMN because I only needed one Column.
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
